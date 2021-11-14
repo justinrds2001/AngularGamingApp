@@ -1,1 +1,41 @@
 /* You can add global styles to this file, and also import other style files */
+.A {
+  background-color: beige;
+  height: 300px;
+}
+
+.B {
+  background-color: darkseagreen;
+  height: 400px;
+}
+
+.list {
+  background-color: lightgreen;
+  height: 300px;
+}
+
+.detail,
+.edit {
+  background-color: lavender;
+  height: 270px;
+}
+
+.edit {
+  background-color: khaki;
+}
+
+.btn {
+  margin-left: 10px;
+}
+
+.main {
+  margin: 10px;
+}
+
+.card {
+  margin: 20px;
+}
+
+footer {
+  min-height: 50px;
+}
