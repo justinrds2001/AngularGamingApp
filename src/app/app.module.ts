@@ -8,12 +8,12 @@ import { BComponent } from './pages/b/b.component';
 import { NavComponent } from './shared/nav/nav.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ListComponent } from './pages/entity/list/list.component';
-import { DetailComponent } from './pages/entity/detail/detail.component';
-import { ColumnsComponent } from './pages/entity/columns.component';
-import { EditComponent } from './pages/entity/edit/edit.component';
-import { GamesComponent } from './pages/entity/games/games.component';
-import { AddUserComponent } from './pages/entity/add-user/add-user.component';
+import { ListComponent } from './pages/user/list/list.component';
+import { DetailComponent } from './pages/user/detail/detail.component';
+import { ColumnsComponent } from './pages/user/columns.component';
+import { EditComponent } from './pages/user/edit/edit.component';
+import { GamesComponent } from './pages/game/games/games.component';
+import { AddUserComponent } from './pages/user/add-user/add-user.component';
 
 @NgModule({
   declarations: [
