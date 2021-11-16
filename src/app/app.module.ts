@@ -7,9 +7,9 @@ import { AppComponent } from './app.component';
 import { NavComponent } from './shared/nav/nav.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { GamesComponent } from './pages/game/games/games.component';
-import { EditGameComponent } from './pages/game/edit-game/edit-game.component';
 import { DetailGameComponent } from './pages/game/detail-game/detail-game.component';
+import { EditGameComponent } from './pages/game/edit-game/edit-game.component';
+import { GamesComponent } from './pages/game/games/games.component';
 
 @NgModule({
   declarations: [
