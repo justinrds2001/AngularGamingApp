@@ -1,35 +1,26 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
+import { FormsModule } from '@angular/forms';
 
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
-import { AComponent } from './pages/a/a.component';
-import { BComponent } from './pages/b/b.component';
 import { NavComponent } from './shared/nav/nav.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
-import { ListComponent } from './pages/user/list/list.component';
-import { DetailComponent } from './pages/user/detail/detail.component';
-import { ColumnsComponent } from './pages/user/columns.component';
-import { EditComponent } from './pages/user/edit/edit.component';
 import { GamesComponent } from './pages/game/games/games.component';
-import { AddUserComponent } from './pages/user/add-user/add-user.component';
+import { EditGameComponent } from './pages/game/edit-game/edit-game.component';
+import { DetailGameComponent } from './pages/game/detail-game/detail-game.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    AComponent,
-    BComponent,
     NavComponent,
     FooterComponent,
-    ListComponent,
-    DetailComponent,
-    ColumnsComponent,
-    EditComponent,
     GamesComponent,
-    AddUserComponent,
+    EditGameComponent,
+    DetailGameComponent,
   ],
-  imports: [BrowserModule, AppRoutingModule, NgbModule],
+  imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule],
   providers: [],
   bootstrap: [AppComponent],
 })

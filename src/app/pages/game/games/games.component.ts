@@ -15,4 +15,10 @@ export class GamesComponent implements OnInit {
   ngOnInit(): void {
     this.games = this.gameService.getGames();
   }
+
+  onDelete(id: Number) {
+    console.log(id);
+    this.gameService.removeGame(id);
+    this.games = this.gameService.getGames();
+  }
 }

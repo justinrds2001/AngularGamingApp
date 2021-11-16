@@ -33,9 +33,29 @@
 }
 
 .card {
+  height: auto;
   margin: 20px;
+  padding: 10px;
+  background-color: white;
+  transition: background-color 0.5s;
+}
+
+.card:hover {
+  background-color: beige;
 }
 
 footer {
   min-height: 50px;
+}
+
+.col a {
+  text-decoration: none;
+  color: black;
+}
+
+.card-text {
+  width: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }

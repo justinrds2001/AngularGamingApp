@@ -3,20 +3,62 @@
     <h1 class="jumbotron-header">Games</h1>
     <p class="lead text-muted">Find your favorite games here!</p>
   </div>
-
-  <div class="row">
-    <div class="col-sm-4" *ngFor="let game of games">
-      <div class="card" style="width: 18rem; height: 27rem">
-        <img
-          class="card-img-top"
-          src="../../../../assets/images/default-image.jpg"
-          alt="Card image cap"
-        />
-        <div class="card-body">
-          <h5 class="card-title">{{ game.name }}</h5>
-          <p class="card-text"><b>tags</b>: {{ game.tags.join(", ") }}</p>
+  <a routerLink="game/add/0" class="btn btn-primary">Add Game</a>
+  <div class="row row-cols-1 row-cols-sm-2 row-cols-md-3 g-3">
+    <div class="col" *ngFor="let game of games">
+      <a [routerLink]="['game/detail', game.id]">
+        <div class="card" style="width: 18rem; height: 27rem">
+          <img
+            class="card-img-top"
+            src="../../../../assets/images/default-image.jpg"
+            alt="Card image cap"
+          />
+          <div class="card-body">
+            <h5 class="card-title">{{ game.name }}</h5>
+            <p class="card-text"><b>tags</b>: {{ game.tags.join(", ") }}</p>
+            <div class="list-inline">
+              <button
+                class="btn btn-danger btn-sm"
+                (click)="
+                  $event.preventDefault();
+                  $event.stopPropagation();
+                  onDelete(game.id!)
+                "
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-trash-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M2.5 1a1 1 0 0 0-1 1v1a1 1 0 0 0 1 1H3v9a2 2 0 0 0 2 2h6a2 2 0 0 0 2-2V4h.5a1 1 0 0 0 1-1V2a1 1 0 0 0-1-1H10a1 1 0 0 0-1-1H7a1 1 0 0 0-1 1H2.5zm3 4a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 .5-.5zM8 5a.5.5 0 0 1 .5.5v7a.5.5 0 0 1-1 0v-7A.5.5 0 0 1 8 5zm3 .5v7a.5.5 0 0 1-1 0v-7a.5.5 0 0 1 1 0z"
+                  />
+                </svg>
+              </button>
+              <a
+                class="btn btn-primary btn-sm"
+                [routerLink]="['game/edit', game.id]"
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="16"
+                  height="16"
+                  fill="currentColor"
+                  class="bi bi-pen-fill"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="m13.498.795.149-.149a1.207 1.207 0 1 1 1.707 1.708l-.149.148a1.5 1.5 0 0 1-.059 2.059L4.854 14.854a.5.5 0 0 1-.233.131l-4 1a.5.5 0 0 1-.606-.606l1-4a.5.5 0 0 1 .131-.232l9.642-9.642a.5.5 0 0 0-.642.056L6.854 4.854a.5.5 0 1 1-.708-.708L9.44.854A1.5 1.5 0 0 1 11.5.796a1.5 1.5 0 0 1 1.998-.001z"
+                  />
+                </svg>
+              </a>
+            </div>
+          </div>
         </div>
-      </div>
+      </a>
     </div>
   </div>
 </div>
