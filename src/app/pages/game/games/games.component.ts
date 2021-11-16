@@ -17,8 +17,10 @@ export class GamesComponent implements OnInit {
   }
 
   onDelete(id: Number) {
-    console.log(id);
-    this.gameService.removeGame(id);
-    this.games = this.gameService.getGames();
+    if (confirm('Are you sure you want to delete this game?' + name)) {
+      console.log(id);
+      this.gameService.removeGame(id);
+      this.games = this.gameService.getGames();
+    }
   }
 }
