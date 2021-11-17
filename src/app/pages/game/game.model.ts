@@ -2,9 +2,9 @@ import { Developer } from 'src/app/developer/developer.model';
 
 export class Game {
   id: number = 0;
-  name: string = '';
+  name: String = '';
   description: String = '';
-  tags: string[] = [];
+  tags: String[] = [];
   releaseDate: Date = new Date();
   developer: Developer = new Developer();
 

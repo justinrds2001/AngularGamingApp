@@ -10,6 +10,7 @@ import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 import { DetailGameComponent } from './pages/game/detail-game/detail-game.component';
 import { EditGameComponent } from './pages/game/edit-game/edit-game.component';
 import { GamesComponent } from './pages/game/games/games.component';
+import { AboutUsComponent } from './pages/about/about-us/about-us.component';
 
 @NgModule({
   declarations: [
@@ -19,6 +20,7 @@ import { GamesComponent } from './pages/game/games/games.component';
     GamesComponent,
     EditGameComponent,
     DetailGameComponent,
+    AboutUsComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule],
   providers: [],

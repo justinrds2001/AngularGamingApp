@@ -1,29 +1,4 @@
 /* You can add global styles to this file, and also import other style files */
-.A {
-  background-color: beige;
-  height: 300px;
-}
-
-.B {
-  background-color: darkseagreen;
-  height: 400px;
-}
-
-.list {
-  background-color: lightgreen;
-  height: 300px;
-}
-
-.detail,
-.edit {
-  background-color: lavender;
-  height: 270px;
-}
-
-.edit {
-  background-color: khaki;
-}
-
 .btn {
   margin-left: 10px;
 }
@@ -36,18 +11,17 @@
   height: auto;
   margin: 20px;
   padding: 10px;
-  background-color: white;
+  background-color: #92bcea;
   transition: background-color 0.5s;
 }
 
 .card:hover {
-  background-color: darksalmon;
+  background-color: #76ace5;
 }
 
 footer {
   height: 50px;
   bottom: 0px;
-  position: sticky;
 }
 
 .col a {
@@ -60,4 +34,25 @@ footer {
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+}
+
+.jumbotron {
+  background-color: #afb3f7;
+}
+
+img {
+  width: 100%;
+}
+
+.avatar {
+  vertical-align: middle;
+  width: 30%;
+  height: 30%;
+  border-radius: 50%;
+}
+
+.avans {
+  vertical-align: middle;
+  width: 30%;
+  height: 30%;
 }

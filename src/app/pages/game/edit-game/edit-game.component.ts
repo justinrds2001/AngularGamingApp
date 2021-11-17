@@ -21,7 +21,6 @@ export class EditGameComponent implements OnInit {
     developer: new Developer(),
     tags: [],
   };
-  tags: any;
   inputString: any;
   tagList: String[] = [];
 
@@ -37,20 +36,17 @@ export class EditGameComponent implements OnInit {
 
     if (this.id != 0) {
       this.game = this.gameService.getGameById(this.id);
-      this.tags = this.game.tags.join(', ').toString();
       this.tagList = this.game.tags.concat();
     }
   }
 
   onSubmit(form: NgForm) {
-    let tagsFromForm = this.tags.split(', ');
-    console.log(tagsFromForm);
     let game: Game = {
       id: Number(form.value.id),
       name: form.value.name,
       description: form.value.description,
       releaseDate: form.value.releaseDate,
-      tags: tagsFromForm,
+      tags: this.tagList,
       developer: {
         id: 0,
         name: 'Default developer',
@@ -66,14 +62,12 @@ export class EditGameComponent implements OnInit {
     this.router.navigateByUrl('');
   }
 
-  changeLabelName() {
-    if (this.tags === undefined) {
-      this.tags = this.inputString;
-      this.tagList[0] = this.inputString;
-    } else {
-      this.tags += ', ' + this.inputString;
-      this.tagList.push(this.inputString);
-    }
+  addTag() {
+    this.tagList.push(this.inputString);
     this.inputString = '';
+  }
+
+  deleteTag(tag: String) {
+    this.tagList = this.tagList.filter((item) => item != tag);
   }
 }
