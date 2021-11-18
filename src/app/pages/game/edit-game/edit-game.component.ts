@@ -21,6 +21,7 @@ export class EditGameComponent implements OnInit {
     developer: new Developer(),
     tags: [],
   };
+  developer: String = '';
   inputString: any;
   tagList: String[] = [];
 
@@ -53,7 +54,7 @@ export class EditGameComponent implements OnInit {
       tags: this.tagList,
       developer: {
         id: 0,
-        name: 'Default developer',
+        name: form.value.developer,
         foundedInLocation: 'Tilburg - The Netherlands',
         foundedAtDate: new Date(2001, 3, 3),
       },
