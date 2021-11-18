@@ -1,4 +1,5 @@
 import { Injectable } from '@angular/core';
+import { Observable, of } from 'rxjs';
 import { Game } from './game.model';
 
 @Injectable({
@@ -83,6 +84,11 @@ export class GameService {
   getGames(): Game[] {
     console.log('getGames called');
     return this.games;
+  }
+
+  getGamesAsObservable(): Observable<Game[]> {
+    console.log('getGamesAsObservable called');
+    return of(this.games);
   }
 
   getGameById(id: Number): Game {

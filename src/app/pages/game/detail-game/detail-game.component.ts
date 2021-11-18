@@ -27,10 +27,12 @@ export class DetailGameComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.id = Number(this.route.snapshot.paramMap.get('id'));
-    this.game = this.gameService.getGameById(this.id);
-    this.releaseDateFormatted = new Date(
-      this.game.releaseDate
-    ).toLocaleDateString();
+    this.route.paramMap.subscribe((params) => {
+      this.id = Number(params.get('id'));
+      this.game = this.gameService.getGameById(this.id);
+      this.releaseDateFormatted = new Date(
+        this.game.releaseDate
+      ).toLocaleDateString();
+    });
   }
 }

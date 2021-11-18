@@ -1,7 +1,7 @@
 import { Developer } from 'src/app/developer/developer.model';
 
 export class Game {
-  id: number = 0;
+  id: Number | undefined;
   name: String = '';
   description: String = '';
   tags: String[] = [];

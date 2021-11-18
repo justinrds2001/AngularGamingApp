@@ -8,7 +8,7 @@ import { GamesComponent } from './pages/game/games/games.component';
 const routes: Routes = [
   { path: '', pathMatch: 'full', redirectTo: 'game' },
   { path: 'game', pathMatch: 'full', component: GamesComponent },
-  { path: 'game/add/:id', pathMatch: 'full', component: EditGameComponent },
+  { path: 'game/add', pathMatch: 'full', component: EditGameComponent },
   { path: 'game/edit/:id', pathMatch: 'full', component: EditGameComponent },
   {
     path: 'game/detail/:id',

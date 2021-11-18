@@ -31,18 +31,22 @@ export class EditGameComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.id = Number(this.route.snapshot.paramMap.get('id'));
-    this.header = this.id === 0 ? 'Add Game' : 'Edit Game';
+    this.route.paramMap.subscribe((params) => {
+      this.id = Number(params.get('id'));
+      this.header = !this.id ? 'Add Game' : 'Edit Game';
 
-    if (this.id != 0) {
-      this.game = this.gameService.getGameById(this.id);
-      this.tagList = this.game.tags.concat();
-    }
+      if (this.id) {
+        this.game = this.gameService.getGameById(this.id);
+        this.tagList = this.game.tags.concat();
+      } else {
+        this.game = new Game();
+      }
+    });
   }
 
   onSubmit(form: NgForm) {
     let game: Game = {
-      id: Number(form.value.id),
+      id: form.value.id,
       name: form.value.name,
       description: form.value.description,
       releaseDate: form.value.releaseDate,
@@ -54,9 +58,20 @@ export class EditGameComponent implements OnInit {
         foundedAtDate: new Date(2001, 3, 3),
       },
     };
-    if (this.id === 0) {
+    if (!this.id || form.value.id === '') {
+      let lastGame = this.gameService.games[this.gameService.games.length - 1];
+      if (lastGame) {
+        game.id = +lastGame.id! + 1;
+      } else {
+        game.id = 1;
+      }
+      console.log(game);
+      console.log('addGame() called');
       this.gameService.addGame(game);
     } else {
+      game.id = this.id;
+      console.log(game);
+      console.log('updateGame() called');
       this.gameService.updateGame(game);
     }
     this.router.navigateByUrl('');

@@ -3,7 +3,7 @@
     <h1 class="jumbotron-header">Games</h1>
     <p class="lead text-muted">Find your favorite games here!</p>
   </div>
-  <a routerLink="add/0" class="btn btn-primary">Add Game</a>
+  <a routerLink="add" class="btn btn-primary">Add Game</a>
   <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3">
     <div class="col" *ngFor="let game of games">
       <a [routerLink]="['detail', game.id]">
