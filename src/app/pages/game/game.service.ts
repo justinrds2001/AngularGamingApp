@@ -115,5 +115,6 @@ export class GameService {
     oldGame.description = game.description;
     oldGame.releaseDate = game.releaseDate;
     oldGame.tags = game.tags;
+    oldGame.developer = game.developer;
   }
 }

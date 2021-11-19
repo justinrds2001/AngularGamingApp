@@ -39,6 +39,7 @@ export class EditGameComponent implements OnInit {
       if (this.id) {
         this.game = this.gameService.getGameById(this.id);
         this.tagList = this.game.tags.concat();
+        this.developer = this.game.developer.name;
       } else {
         this.game = new Game();
       }
