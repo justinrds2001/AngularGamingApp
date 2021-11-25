@@ -8,26 +8,26 @@ import { DeveloperService } from '../developer.service';
 @Component({
   selector: 'app-edit-developer',
   templateUrl: './edit-developer.component.html',
-  styleUrls: ['./edit-developer.component.css']
+  styleUrls: ['./edit-developer.component.css'],
 })
 export class EditDeveloperComponent implements OnInit {
-  id: Number = 0
-  header: String = ''
+  id: Number = 0;
+  header: String = '';
   developer: Developer = {
     id: 0,
     name: '',
     foundedInLocation: '',
     foundedAtDate: new Date(),
-    founders: []
-  }
+    founders: [],
+  };
   founderInput: any;
-  founderList: String[] = []
+  founderList: String[] = [];
 
   constructor(
     private route: ActivatedRoute,
     private developerService: DeveloperService,
     private router: Router
-  ) { }
+  ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
@@ -49,25 +49,38 @@ export class EditDeveloperComponent implements OnInit {
       name: form.value.name,
       foundedInLocation: form.value.foundedInLocation,
       foundedAtDate: form.value.foundedAtDate,
-      founders: this.founderList
-    }
+      founders: this.founderList,
+    };
     if (!this.id || form.value.id === '') {
-      let lastDeveloper = this.developerService.developers[this.developerService
-        .developers.length - 1]
-        if (lastDeveloper) {
-          developer.id = +lastDeveloper.id! + 1
-        } else {
-          developer.id
-        }
-        console.log(developer);
-        console.log('addDeveloper() called');
-        this.developerService.addDeveloper(developer)
+      let lastDeveloper =
+        this.developerService.developers[
+          this.developerService.developers.length - 1
+        ];
+      if (lastDeveloper) {
+        developer.id = +lastDeveloper.id! + 1;
+      } else {
+        developer.id;
+      }
+      console.log(developer);
+      console.log('addDeveloper() called');
+      this.developerService.addDeveloper(developer);
+      this.router.navigate(['../'], { relativeTo: this.route });
     } else {
-      developer.id = this.id
-      console.log(developer)
-      console.log('updateDeveloper() called')
+      developer.id = this.id;
+      console.log(developer);
+      console.log('updateDeveloper() called');
       // update developer here
+      this.developerService.updateDeveloper(developer);
+      this.router.navigate(['../../'], { relativeTo: this.route });
     }
-    this.router.navigateByUrl('')
+  }
+
+  addFounder() {
+    this.founderList.push(this.founderInput);
+    this.founderInput = '';
+  }
+
+  deleteTag(founder: String) {
+    this.founderList = this.founderList.filter((item) => item != founder);
   }
 }

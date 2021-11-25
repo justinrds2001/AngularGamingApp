@@ -1,1 +1,81 @@
-<p>edit-developer works!</p>
+<div class="container">
+  <h2>{{ header }}</h2>
+
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <div class="form-group">
+      <label for="">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        [ngModel]="developer.name"
+        name="name"
+      />
+    </div>
+    <div class="form-group">
+      <label for="">Founded in location</label>
+      <input
+        type="text"
+        class="form-control"
+        [ngModel]="developer.foundedInLocation"
+        name="foundedInLocation"
+      />
+    </div>
+    <div class="form-group">
+      <label for="">Founded at date</label>
+      <input
+        type="date"
+        class="form-control"
+        [ngModel]="developer.foundedAtDate"
+        name="foundedAtDate"
+      />
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="">Founder</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="founderInput"
+            [ngModelOptions]="{ standalone: true }"
+          />
+          <p>
+            <button
+              type="button"
+              class="btn btn-info btn-sm mt-3"
+              (click)="addFounder()"
+              [disabled]="!founderInput"
+            >
+              Add tag
+            </button>
+          </p>
+          <!--
+          <span class="badge badge-secondary m-1" *ngFor="let tag of tagList"
+            >{{ tag }}
+            <a type="button" (click)="deleteTag(tag)">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="16"
+                height="16"
+                fill="red"
+                class="bi bi-x-circle-fill"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zM5.354 4.646a.5.5 0 1 0-.708.708L7.293 8l-2.647 2.646a.5.5 0 0 0 .708.708L8 8.707l2.646 2.647a.5.5 0 0 0 .708-.708L8.707 8l2.647-2.646a.5.5 0 0 0-.708-.708L8 7.293 5.354 4.646z"
+                />
+              </svg>
+            </a>
+          </span>
+        --></div>
+      </div>
+    </div>
+    <div class="row justify-content-end">
+      <div class="col">
+        <button class="btn btn-primary btn-sm float-left" type="submit">
+          Save
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

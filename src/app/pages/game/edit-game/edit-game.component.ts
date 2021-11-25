@@ -2,6 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Developer } from '../../developer/developer.model';
+import { DeveloperService } from '../../developer/developer.service';
 import { Game } from '../game.model';
 import { GameService } from '../game.service';
 
@@ -21,13 +22,15 @@ export class EditGameComponent implements OnInit {
     developer: new Developer(),
     tags: [],
   };
-  developer: String = '';
   inputString: any;
   tagList: String[] = [];
+  developers: Developer[] = [];
+  selectedDeveloperId: Number = -1;
 
   constructor(
     private route: ActivatedRoute,
     private gameService: GameService,
+    private developerService: DeveloperService,
     private router: Router
   ) {}
 
@@ -35,11 +38,10 @@ export class EditGameComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.id = Number(params.get('id'));
       this.header = !this.id ? 'Add Game' : 'Edit Game';
-
+      this.developers = this.developerService.getDevelopersNormally();
       if (this.id) {
         this.game = this.gameService.getGameById(this.id);
         this.tagList = this.game.tags.concat();
-        this.developer = this.game.developer.name;
       } else {
         this.game = new Game();
       }
@@ -47,19 +49,22 @@ export class EditGameComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
+    // doesnt work or doesnt load in time
+    let developer = this.developerService.getDeveloperById(
+      this.selectedDeveloperId
+    );
+    console.log('Selected developer id: ' + this.selectedDeveloperId);
+    console.log(
+      'Selected developer: ' +
+        this.developerService.getDeveloperById(this.selectedDeveloperId)
+    );
     let game: Game = {
       id: form.value.id,
       name: form.value.name,
       description: form.value.description,
       releaseDate: form.value.releaseDate,
       tags: this.tagList,
-      developer: {
-        id: 0,
-        name: form.value.developer,
-        foundedInLocation: 'Tilburg - The Netherlands',
-        foundedAtDate: new Date(2001, 3, 3),
-        founders: []
-      },
+      developer: developer,
     };
     if (!this.id || form.value.id === '') {
       let lastGame = this.gameService.games[this.gameService.games.length - 1];
