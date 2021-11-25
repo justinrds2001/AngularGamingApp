@@ -1,0 +1,111 @@
+<div class="container">
+  <h2>{{ header }}</h2>
+
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <div class="form-group">
+      <label for="">Rating</label>
+      <br />
+      <span
+        class="star"
+        *ngFor="let star of stars; let i = index"
+        (click)="rate(i + 1)"
+      >
+        <ng-container *ngIf="star; else noStar">⭐</ng-container>
+        <ng-template #noStar>★</ng-template>
+      </span>
+    </div>
+    <div class="form-group">
+      <label for="">Your opinion in 1 sentence</label>
+      <input
+        type="text"
+        class="form-control"
+        [ngModel]="review.oneliner"
+        name="oneliner"
+      />
+    </div>
+    <div class="form-group">
+      <label for="">Your experience</label>
+      <textarea
+        rows="4"
+        cols="50"
+        type="text"
+        class="form-control"
+        [ngModel]="review.experience"
+        name="experience"
+      ></textarea>
+    </div>
+    <div class="row">
+      <div class="col-6">
+        <label for="">Plus points</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="plusPointInput"
+          [ngModelOptions]="{ standalone: true }"
+        />
+        <p>
+          <button
+            type="button"
+            class="btn btn-info btn-sm mt-3"
+            (click)="addPlusPoint()"
+            [disabled]="!plusPointInput"
+          >
+            Add plus point
+          </button>
+        </p>
+        <div class="row" *ngFor="let plusPoint of plusPointList">
+          <div class="col-10">
+            {{ plusPoint }}
+          </div>
+          <div class="col-2">
+            <a
+              type="button"
+              class="btn btn-danger m-1"
+              (click)="deletePlusPoint(plusPoint)"
+              >Delete</a
+            >
+          </div>
+        </div>
+      </div>
+      <div class="col-6">
+        <label for="">Minus points</label>
+        <input
+          type="text"
+          class="form-control"
+          [(ngModel)]="minusPointInput"
+          [ngModelOptions]="{ standalone: true }"
+        />
+        <p>
+          <button
+            type="button"
+            class="btn btn-info btn-sm mt-3"
+            (click)="addMinusPoint()"
+            [disabled]="!minusPointInput"
+          >
+            Add minus point
+          </button>
+        </p>
+        <div class="row" *ngFor="let minusPoint of minusPointList">
+          <div class="col-10">
+            {{ minusPoint }}
+          </div>
+          <div class="col-2">
+            <a
+              type="button"
+              class="btn btn-danger m-1"
+              (click)="deleteMinusPoint(minusPoint)"
+              >Delete</a
+            >
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-end">
+      <div class="col">
+        <button class="btn btn-primary btn-sm float-left" type="submit">
+          Save
+        </button>
+      </div>
+    </div>
+  </form>
+</div>
