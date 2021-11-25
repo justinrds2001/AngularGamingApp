@@ -19,6 +19,13 @@ export class GameService {
         name: 'Rockstar Games',
         foundedInLocation: 'New York - USA',
         foundedAtDate: new Date(1998, 12, 1),
+        founders: [
+          'Dan Houser',
+          'Sam Houser',
+          'Terry Donovan',
+          'Gary Foreman',
+          'Jamie King'
+        ]
       },
     },
     {
@@ -33,6 +40,10 @@ export class GameService {
         name: 'CD PROJEKT RED',
         foundedInLocation: 'Poland',
         foundedAtDate: new Date(2002, 2, 1),
+        founders: [
+          'Michał Kiciński',
+          'Marcin Iwiński'
+        ]
       },
     },
     {
@@ -47,6 +58,10 @@ export class GameService {
         name: 'Treyarch',
         foundedInLocation: 'California - USA',
         foundedAtDate: new Date(1998, 12, 1),
+        founders: [
+          'Doğan Köslü',
+          'Peter Akemann'
+        ]
       },
     },
     {
@@ -61,6 +76,11 @@ export class GameService {
         name: 'DICE',
         foundedInLocation: 'Växjö - Zweden',
         foundedAtDate: new Date(1992, 5, 1),
+        founders: [
+          'Fredrik Liliegren',
+          'Olof Gustafsson',
+          'Andreas Axelsson'
+        ]
       },
     },
     {
@@ -75,6 +95,7 @@ export class GameService {
         name: 'Playground Games',
         foundedInLocation: 'United Kingdom',
         foundedAtDate: new Date(2010, 1, 1),
+        founders: []
       },
     },
   ];

@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Developer } from 'src/app/developer/developer.model';
+import { Developer } from '../../developer/developer.model';
 import { Game } from '../game.model';
 import { GameService } from '../game.service';
 
@@ -58,6 +58,7 @@ export class EditGameComponent implements OnInit {
         name: form.value.developer,
         foundedInLocation: 'Tilburg - The Netherlands',
         foundedAtDate: new Date(2001, 3, 3),
+        founders: []
       },
     };
     if (!this.id || form.value.id === '') {

@@ -1,4 +1,4 @@
-import { Developer } from 'src/app/developer/developer.model';
+import { Developer } from "../developer/developer.model";
 
 export class Game {
   id: Number | undefined;
