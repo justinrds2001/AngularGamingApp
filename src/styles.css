@@ -11,12 +11,19 @@
   height: auto;
   margin: 20px;
   padding: 10px;
-  background-color: #92bcea;
   transition: background-color 0.5s;
 }
 
-.card:hover {
+.game {
+  background-color: #92bcea;
+}
+
+.game:hover {
   background-color: #76ace5;
+}
+
+.review {
+  background-color: #a8c686;
 }
 
 footer {

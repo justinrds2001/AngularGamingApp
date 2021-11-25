@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { Review } from '../review/review.model';
 import { Game } from './game.model';
 
 @Injectable({
@@ -20,6 +21,7 @@ export class GameService {
         foundedInLocation: 'New York - USA',
         foundedAtDate: new Date(1998, 12, 1),
       },
+      reviews: [],
     },
     {
       id: 2,
@@ -34,6 +36,7 @@ export class GameService {
         foundedInLocation: 'Poland',
         foundedAtDate: new Date(2002, 2, 1),
       },
+      reviews: [],
     },
     {
       id: 3,
@@ -48,6 +51,7 @@ export class GameService {
         foundedInLocation: 'California - USA',
         foundedAtDate: new Date(1998, 12, 1),
       },
+      reviews: [],
     },
     {
       id: 4,
@@ -62,6 +66,7 @@ export class GameService {
         foundedInLocation: 'Växjö - Zweden',
         foundedAtDate: new Date(1992, 5, 1),
       },
+      reviews: [],
     },
     {
       id: 5,
@@ -76,6 +81,7 @@ export class GameService {
         foundedInLocation: 'United Kingdom',
         foundedAtDate: new Date(2010, 1, 1),
       },
+      reviews: [],
     },
   ];
 
@@ -116,5 +122,14 @@ export class GameService {
     oldGame.releaseDate = game.releaseDate;
     oldGame.tags = game.tags;
     oldGame.developer = game.developer;
+    oldGame.reviews = game.reviews;
+  }
+
+  getReviews() {
+    let reviews: Review[] = [];
+    this.games.forEach((game) => {
+      reviews.push(...game.reviews);
+    });
+    return reviews;
   }
 }

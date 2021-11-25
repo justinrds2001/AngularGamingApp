@@ -11,6 +11,7 @@ import { DetailGameComponent } from './pages/game/detail-game/detail-game.compon
 import { EditGameComponent } from './pages/game/edit-game/edit-game.component';
 import { GamesComponent } from './pages/game/games/games.component';
 import { AboutUsComponent } from './pages/about/about-us/about-us.component';
+import { EditReviewComponent } from './pages/review/edit-review/edit-review.component';
 
 @NgModule({
   declarations: [
@@ -21,6 +22,7 @@ import { AboutUsComponent } from './pages/about/about-us/about-us.component';
     EditGameComponent,
     DetailGameComponent,
     AboutUsComponent,
+    EditReviewComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule],
   providers: [],

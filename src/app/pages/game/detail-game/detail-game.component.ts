@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Developer } from 'src/app/developer/developer.model';
+import { Developer } from 'src/app/pages/developer/developer.model';
 import { Game } from '../game.model';
 import { GameService } from '../game.service';
 
@@ -17,6 +17,7 @@ export class DetailGameComponent implements OnInit {
     releaseDate: new Date(),
     developer: new Developer(),
     tags: [],
+    reviews: [],
   };
   id: Number = 0;
   releaseDateFormatted: String = '';

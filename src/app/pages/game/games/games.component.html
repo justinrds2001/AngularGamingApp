@@ -6,8 +6,8 @@
   <a routerLink="add" class="btn btn-primary">Add Game</a>
   <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3">
     <div class="col" *ngFor="let game of games">
-      <a [routerLink]="['detail', game.id]">
-        <div class="card" style="width: 18rem; height: 27rem">
+      <a [routerLink]="[game.id]">
+        <div class="card game" style="width: 18rem; height: 27rem">
           <img
             class="card-img-top"
             src="../../../../assets/images/default-image.jpg"

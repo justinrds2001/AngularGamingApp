@@ -33,3 +33,14 @@
     </dl>
   </div>
 </div>
+<div class="col border">
+  <h3>Reviews</h3>
+  <a routerLink="review" class="btn btn-primary text-white">Add Review</a>
+  <div class="card review" *ngFor="let review of game.reviews">
+    <div class="card-body">
+      <h5 class="card-title">{{ review.oneliner }}</h5>
+      <p class="card-text">Rating: {{ review.rating }}</p>
+      <p class="card-text">{{ review.experience }}</p>
+    </div>
+  </div>
+</div>

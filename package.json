@@ -6,7 +6,7 @@
     "start": "ng serve --port $PORT --host 0.0.0.0 --disable-host-check",
     "build": "ng build --prod",
     "watch": "ng build --watch --configuration development",
-    "test": "ng test"
+    "test": "ng test --code-coverage --no-watch --no-progress --browsers=ChromeHeadlessCI"
   },
   "private": true,
   "dependencies": {

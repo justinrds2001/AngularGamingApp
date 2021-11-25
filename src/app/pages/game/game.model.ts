@@ -1,4 +1,5 @@
-import { Developer } from 'src/app/developer/developer.model';
+import { Developer } from 'src/app/pages/developer/developer.model';
+import { Review } from '../review/review.model';
 
 export class Game {
   id: Number | undefined;
@@ -7,18 +8,5 @@ export class Game {
   tags: String[] = [];
   releaseDate: Date = new Date();
   developer: Developer = new Developer();
-
-  constructor(
-    name = '',
-    description = '',
-    tags = [],
-    releaseDate = new Date(),
-    developer = new Developer()
-  ) {
-    this.name = name;
-    this.description = description;
-    this.tags = tags;
-    this.releaseDate = releaseDate;
-    this.developer = developer;
-  }
+  reviews: Review[] = [];
 }

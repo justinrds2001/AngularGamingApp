@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { NgForm } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
-import { Developer } from 'src/app/developer/developer.model';
+import { Developer } from 'src/app/pages/developer/developer.model';
 import { Game } from '../game.model';
 import { GameService } from '../game.service';
 
@@ -13,14 +13,7 @@ import { GameService } from '../game.service';
 export class EditGameComponent implements OnInit {
   id: Number = 0;
   header: String = '';
-  game: Game = {
-    id: 0,
-    name: '',
-    description: '',
-    releaseDate: new Date(),
-    developer: new Developer(),
-    tags: [],
-  };
+  game: Game = new Game();
   developer: String = '';
   inputString: any;
   tagList: String[] = [];
@@ -59,6 +52,7 @@ export class EditGameComponent implements OnInit {
         foundedInLocation: 'Tilburg - The Netherlands',
         foundedAtDate: new Date(2001, 3, 3),
       },
+      reviews: [],
     };
     if (!this.id || form.value.id === '') {
       let lastGame = this.gameService.games[this.gameService.games.length - 1];
