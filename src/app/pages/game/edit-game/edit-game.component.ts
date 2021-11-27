@@ -50,9 +50,6 @@ export class EditGameComponent implements OnInit {
 
   onSubmit(form: NgForm) {
     // doesnt work or doesnt load in time
-    let developer = this.developerService.getDeveloperById(
-      this.selectedDeveloperId
-    );
     console.log('Selected developer id: ' + this.selectedDeveloperId);
     console.log(
       'Selected developer: ' +
@@ -64,8 +61,13 @@ export class EditGameComponent implements OnInit {
       description: form.value.description,
       releaseDate: form.value.releaseDate,
       tags: this.tagList,
-      developer: developer,
+      developer: form.value.developer,
     };
+    let developer = this.developerService.getDeveloperById(
+      this.selectedDeveloperId
+    );
+    game.developer = developer;
+
     if (!this.id || form.value.id === '') {
       let lastGame = this.gameService.games[this.gameService.games.length - 1];
       if (lastGame) {

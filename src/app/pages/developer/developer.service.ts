@@ -61,7 +61,8 @@ export class DeveloperService {
   }
 
   getDeveloperById(id: Number): Developer {
-    return this.developers.filter((developer) => developer.id === id)[0];
+    console.log('getDeveloperById: ' + this.getDevelopers());
+    return this.developers.find((developer) => developer.id == id)!;
   }
 
   addDeveloper(developer: Developer) {
