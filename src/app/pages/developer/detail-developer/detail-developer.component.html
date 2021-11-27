@@ -1,0 +1,32 @@
+<div class="jumbotron text-center">
+  <h1 class="jumbotron-header">{{ developer.name }}</h1>
+</div>
+<div class="row row-cols-1 row-cols-sm-2">
+  <div class="col">
+    <img
+      class="card-img-top"
+      src="../../../../assets/images/developer.jpg"
+      alt="Card image cap"
+    />
+  </div>
+  <div class="col border">
+    <br />
+    <dl class="row">
+      <dt class="col-sm-4">Founded in location</dt>
+      <dd class="col-sm-8">
+        {{ developer.foundedInLocation }}
+      </dd>
+      <dt class="col-sm-4">Founded at date</dt>
+      <dd class="col-sm-8">
+        {{ foundedAtDateFormatted }}
+      </dd>
+      <dt class="col-sm-4">Founders</dt>
+      <dd *ngIf="developer.founders.length != 0" class="col-sm-8">
+        {{ developer.founders.join(", ") }}
+      </dd>
+      <dd *ngIf="developer.founders.length === 0" class="col-sm-8">
+        None available
+      </dd>
+    </dl>
+  </div>
+</div>

@@ -10,15 +10,7 @@ import { GameService } from '../game.service';
   styles: [],
 })
 export class DetailGameComponent implements OnInit {
-  game: Game = {
-    id: 0,
-    name: '',
-    description: '',
-    releaseDate: new Date(),
-    developer: new Developer(),
-    tags: [],
-    reviews: [],
-  };
+  game: Game = new Game();
   id: Number = 0;
   releaseDateFormatted: String = '';
 

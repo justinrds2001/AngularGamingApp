@@ -20,6 +20,13 @@ export class GameService {
         name: 'Rockstar Games',
         foundedInLocation: 'New York - USA',
         foundedAtDate: new Date(1998, 12, 1),
+        founders: [
+          'Dan Houser',
+          'Sam Houser',
+          'Terry Donovan',
+          'Gary Foreman',
+          'Jamie King',
+        ],
       },
       reviews: [],
     },
@@ -35,6 +42,7 @@ export class GameService {
         name: 'CD PROJEKT RED',
         foundedInLocation: 'Poland',
         foundedAtDate: new Date(2002, 2, 1),
+        founders: ['Michał Kiciński', 'Marcin Iwiński'],
       },
       reviews: [],
     },
@@ -50,6 +58,7 @@ export class GameService {
         name: 'Treyarch',
         foundedInLocation: 'California - USA',
         foundedAtDate: new Date(1998, 12, 1),
+        founders: ['Doğan Köslü', 'Peter Akemann'],
       },
       reviews: [],
     },
@@ -65,6 +74,7 @@ export class GameService {
         name: 'DICE',
         foundedInLocation: 'Växjö - Zweden',
         foundedAtDate: new Date(1992, 5, 1),
+        founders: ['Fredrik Liliegren', 'Olof Gustafsson', 'Andreas Axelsson'],
       },
       reviews: [],
     },
@@ -80,6 +90,7 @@ export class GameService {
         name: 'Playground Games',
         foundedInLocation: 'United Kingdom',
         foundedAtDate: new Date(2010, 1, 1),
+        founders: [],
       },
       reviews: [],
     },
@@ -98,7 +109,7 @@ export class GameService {
   }
 
   getGameById(id: Number): Game {
-    return this.games.filter((game) => game.id === id)[0];
+    return this.games.filter((game) => game.id == id)[0];
   }
 
   addGame(game: Game) {
@@ -107,7 +118,7 @@ export class GameService {
 
   removeGame(id: Number) {
     console.log('id: ' + id);
-    let game = this.games.find((x) => x.id === id)!;
+    let game = this.games.find((x) => x.id == id)!;
     let index = this.games.indexOf(game, 0);
     console.log('index: ' + index);
     console.log(this.games);
@@ -116,7 +127,7 @@ export class GameService {
   }
 
   updateGame(game: Game) {
-    let oldGame = this.games.find((x) => x.id === game.id)!;
+    let oldGame = this.games.find((x) => x.id == game.id)!;
     oldGame.name = game.name;
     oldGame.description = game.description;
     oldGame.releaseDate = game.releaseDate;

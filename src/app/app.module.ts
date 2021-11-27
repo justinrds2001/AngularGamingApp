@@ -12,6 +12,9 @@ import { EditGameComponent } from './pages/game/edit-game/edit-game.component';
 import { GamesComponent } from './pages/game/games/games.component';
 import { AboutUsComponent } from './pages/about/about-us/about-us.component';
 import { EditReviewComponent } from './pages/review/edit-review/edit-review.component';
+import { DevelopersComponent } from './pages/developer/developers/developers.component';
+import { EditDeveloperComponent } from './pages/developer/edit-developer/edit-developer.component';
+import { DetailDeveloperComponent } from './pages/developer/detail-developer/detail-developer.component';
 
 @NgModule({
   declarations: [
@@ -23,6 +26,9 @@ import { EditReviewComponent } from './pages/review/edit-review/edit-review.comp
     DetailGameComponent,
     AboutUsComponent,
     EditReviewComponent,
+    DevelopersComponent,
+    EditDeveloperComponent,
+    DetailDeveloperComponent,
   ],
   imports: [BrowserModule, AppRoutingModule, NgbModule, FormsModule],
   providers: [],

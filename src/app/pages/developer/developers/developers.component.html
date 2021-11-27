@@ -1,25 +1,25 @@
 <div class="main">
   <div class="jumbotron text-center">
-    <h1 class="jumbotron-header">Games</h1>
-    <p class="lead text-muted">Find your favorite games here!</p>
+    <h1 class="jumbotron-header">Developers</h1>
+    <p class="lead text-muted">Find your favorite developers here!</p>
   </div>
-  <a routerLink="add" class="btn btn-primary">Add Game</a>
+  <a routerLink="add" class="btn btn-primary">Add Developer</a>
   <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3">
-    <div class="col" *ngFor="let game of games">
-      <a [routerLink]="[game.id]">
-        <div class="card game" style="width: 18rem; height: 27rem">
+    <div class="col" *ngFor="let developer of developers">
+      <a [routerLink]="[developer.id]">
+        <div class="card developer" style="width: 18rem">
           <img
             class="card-img-top list-img"
-            src="../../../../assets/images/games.png"
+            src="../../../../assets/images/developer.jpg"
             alt="Card image cap"
           />
           <div class="card-body">
-            <h5 class="card-title">{{ game.name }}</h5>
-            <p *ngIf="game.tags.length != 0" class="card-text">
-              <b>tags</b>: {{ game.tags.join(", ") }}
+            <h5 class="card-title">{{ developer.name }}</h5>
+            <p *ngIf="developer.founders.length != 0" class="card-text">
+              <b>founders</b>: {{ developer.founders.join(", ") }}
             </p>
-            <p *ngIf="game.tags.length === 0" class="card-text">
-              <b>tags</b>: None available
+            <p *ngIf="developer.founders.length === 0" class="card-text">
+              <b>founders</b>: None available
             </p>
             <div class="list-inline">
               <a
@@ -27,7 +27,7 @@
                 (click)="
                   $event.preventDefault();
                   $event.stopPropagation();
-                  onDelete(game.id!)
+                  onDelete(developer.id!)
                 "
               >
                 <svg
@@ -45,7 +45,7 @@
               </a>
               <a
                 class="btn btn-primary btn-sm"
-                [routerLink]="['edit', game.id]"
+                [routerLink]="['edit', developer.id]"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

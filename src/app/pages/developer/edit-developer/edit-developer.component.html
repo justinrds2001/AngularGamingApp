@@ -1,0 +1,76 @@
+<div class="container">
+  <h2>{{ header }}</h2>
+
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <div class="form-group">
+      <label for="">Name</label>
+      <input
+        type="text"
+        class="form-control"
+        [ngModel]="developer.name"
+        name="name"
+      />
+    </div>
+    <div class="form-group">
+      <label for="">Founded in location</label>
+      <input
+        type="text"
+        class="form-control"
+        [ngModel]="developer.foundedInLocation"
+        name="foundedInLocation"
+      />
+    </div>
+    <div class="form-group">
+      <label for="">Founded at date</label>
+      <input
+        type="date"
+        class="form-control"
+        [ngModel]="developer.foundedAtDate"
+        name="foundedAtDate"
+      />
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="">Founder</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="founderInput"
+            [ngModelOptions]="{ standalone: true }"
+          />
+          <p>
+            <button
+              type="button"
+              class="btn btn-info btn-sm mt-3"
+              (click)="addFounder()"
+              [disabled]="!founderInput"
+            >
+              Add founder
+            </button>
+          </p>
+          <div class="row" *ngFor="let founder of founderList">
+            <div class="col-10">
+              {{ founder }}
+            </div>
+            <div class="col-2">
+              <a
+                type="button"
+                class="btn btn-danger m-1"
+                (click)="deleteFounder(founder)"
+                >Delete</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-end">
+      <div class="col">
+        <button class="btn btn-primary btn-sm float-left" type="submit">
+          Save
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

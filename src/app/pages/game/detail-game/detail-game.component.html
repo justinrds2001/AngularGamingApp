@@ -5,7 +5,7 @@
   <div class="col">
     <img
       class="card-img-top"
-      src="../../../../assets/images/default-image.jpg"
+      src="../../../../assets/images/games.png"
       alt="Card image cap"
     />
   </div>
@@ -13,11 +13,12 @@
     <br />
     <dl class="row">
       <dt class="col-sm-4">Tags</dt>
-      <dd class="col-sm-8">
+      <dd class="col-sm-8" *ngIf="game.tags.length != 0">
         <span class="badge badge-secondary m-1" *ngFor="let tag of game.tags">{{
           tag
         }}</span>
       </dd>
+      <dd class="col-sm-8" *ngIf="game.tags.length === 0">None available</dd>
       <dt class="col-sm-4">Description</dt>
       <dd class="col-sm-8">
         {{ game.description }}
@@ -33,7 +34,8 @@
     </dl>
   </div>
 </div>
-<div class="col border">
+<br />
+<div class="border">
   <h3>Reviews</h3>
   <a routerLink="review" class="btn btn-primary text-white">Add Review</a>
   <div class="card review" *ngFor="let review of game.reviews">
