@@ -10,8 +10,8 @@ export class DeveloperService {
     {
       id: 1,
       name: 'Rockstar Games',
-      foundedInLocation: 'New York - USA',
-      foundedAtDate: new Date(1998, 12, 1),
+      headquartersLocation: 'New York - USA',
+      dateOfEstablishment: new Date(1998, 12, 1),
       founders: [
         'Dan Houser',
         'Sam Houser',
@@ -19,34 +19,39 @@ export class DeveloperService {
         'Gary Foreman',
         'Jamie King',
       ],
+      website: new URL('https://www.rockstargames.com/'),
     },
     {
       id: 2,
       name: 'CD PROJEKT RED',
-      foundedInLocation: 'Poland',
-      foundedAtDate: new Date(2002, 2, 1),
+      headquartersLocation: 'Poland',
+      dateOfEstablishment: new Date(2002, 2, 1),
       founders: ['Michał Kiciński', 'Marcin Iwiński'],
+      website: new URL('https://www.cdprojekt.com/'),
     },
     {
       id: 3,
       name: 'Treyarch',
-      foundedInLocation: 'California - USA',
-      foundedAtDate: new Date(1998, 12, 1),
+      headquartersLocation: 'California - USA',
+      dateOfEstablishment: new Date(1998, 12, 1),
       founders: ['Doğan Köslü', 'Peter Akemann'],
+      website: new URL('https://www.treyarch.com/'),
     },
     {
       id: 4,
       name: 'DICE',
-      foundedInLocation: 'Växjö - Zweden',
-      foundedAtDate: new Date(1992, 5, 1),
+      headquartersLocation: 'Växjö - Zweden',
+      dateOfEstablishment: new Date(1992, 5, 1),
       founders: ['Fredrik Liliegren', 'Olof Gustafsson', 'Andreas Axelsson'],
+      website: new URL('https://www.dice.se/'),
     },
     {
       id: 5,
       name: 'Playground Games',
-      foundedInLocation: 'United Kingdom',
-      foundedAtDate: new Date(2010, 1, 1),
+      headquartersLocation: 'United Kingdom',
+      dateOfEstablishment: new Date(2010, 1, 1),
       founders: [],
+      website: new URL('https://www.playground-games.com/'),
     },
   ];
 
@@ -72,8 +77,9 @@ export class DeveloperService {
   updateDeveloper(developer: Developer) {
     let oldDev = this.developers.find((x) => x.id == developer.id)!;
     oldDev.name = developer.name;
-    oldDev.foundedInLocation = developer.foundedInLocation;
-    oldDev.foundedAtDate = developer.foundedAtDate;
+    oldDev.headquartersLocation = developer.headquartersLocation;
+    oldDev.dateOfEstablishment = developer.dateOfEstablishment;
+    oldDev.website = developer.website;
     oldDev.founders = developer.founders;
   }
 

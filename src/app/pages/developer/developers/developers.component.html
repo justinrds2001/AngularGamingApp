@@ -5,7 +5,7 @@
   </div>
   <a routerLink="add" class="btn btn-primary">Add Developer</a>
   <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3">
-    <div class="col" *ngFor="let developer of developers">
+    <div class="col entities" *ngFor="let developer of developers">
       <a [routerLink]="[developer.id]">
         <div class="card developer" style="width: 18rem">
           <img

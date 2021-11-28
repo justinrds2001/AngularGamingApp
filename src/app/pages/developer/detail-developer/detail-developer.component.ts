@@ -11,7 +11,6 @@ import { DeveloperService } from '../developer.service';
 export class DetailDeveloperComponent implements OnInit {
   developer: Developer = new Developer();
   id: Number = 0;
-  foundedAtDateFormatted: String = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -22,9 +21,6 @@ export class DetailDeveloperComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.id = Number(params.get('id'));
       this.developer = this.developerService.getDeveloperById(this.id);
-      this.foundedAtDateFormatted = new Date(
-        this.developer.foundedAtDate
-      ).toLocaleDateString();
     });
   }
 }

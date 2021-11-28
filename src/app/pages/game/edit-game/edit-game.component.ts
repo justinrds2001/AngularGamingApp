@@ -19,7 +19,6 @@ export class EditGameComponent implements OnInit {
   inputString: any;
   tagList: String[] = [];
   developers: Developer[] = [];
-  selectedDeveloperId: Number = -1;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,7 +31,7 @@ export class EditGameComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.id = Number(params.get('id'));
       this.header = !this.id ? 'Add Game' : 'Edit Game';
-      this.developers = this.developerService.getDevelopersNormally();
+      this.developers = this.developerService.developers;
       if (this.id) {
         this.game = this.gameService.getGameById(this.id);
         this.tagList = this.game.tags.concat();
@@ -43,12 +42,6 @@ export class EditGameComponent implements OnInit {
   }
 
   onSubmit(form: NgForm) {
-    // doesnt work or doesnt load in time
-    console.log('Selected developer id: ' + this.selectedDeveloperId);
-    console.log(
-      'Selected developer: ' +
-        this.developerService.getDeveloperById(this.selectedDeveloperId)
-    );
     let game: Game = {
       id: form.value.id,
       name: form.value.name,
@@ -59,9 +52,11 @@ export class EditGameComponent implements OnInit {
       reviews: [],
     };
     let developer = this.developerService.getDeveloperById(
-      this.selectedDeveloperId
+      form.value.developer
     );
     game.developer = developer;
+    console.log('OnSubmit: ' + form.value.developer);
+    console.log('OnSubmit: ' + game.developer.name);
 
     if (!this.id || form.value.id === '') {
       let lastGame = this.gameService.games[this.gameService.games.length - 1];

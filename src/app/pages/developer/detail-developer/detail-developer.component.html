@@ -12,13 +12,13 @@
   <div class="col border">
     <br />
     <dl class="row">
-      <dt class="col-sm-4">Founded in location</dt>
+      <dt class="col-sm-4">Headquarters location</dt>
       <dd class="col-sm-8">
-        {{ developer.foundedInLocation }}
+        {{ developer.headquartersLocation }}
       </dd>
-      <dt class="col-sm-4">Founded at date</dt>
+      <dt class="col-sm-4">Date of establishment</dt>
       <dd class="col-sm-8">
-        {{ foundedAtDateFormatted }}
+        {{ developer.dateOfEstablishment | date: "dd/MM/yyyy" }}
       </dd>
       <dt class="col-sm-4">Founders</dt>
       <dd *ngIf="developer.founders.length != 0" class="col-sm-8">
@@ -26,6 +26,12 @@
       </dd>
       <dd *ngIf="developer.founders.length === 0" class="col-sm-8">
         None available
+      </dd>
+      <dt class="col-sm-4">Website</dt>
+      <dd class="col-sm-8">
+        <a href="{{ developer.website }}" target="_blank">{{
+          developer.website
+        }}</a>
       </dd>
     </dl>
   </div>

@@ -39,7 +39,7 @@ footer {
   bottom: 0px;
 }
 
-.col a {
+.col.entities a {
   text-decoration: none;
   color: black;
 }

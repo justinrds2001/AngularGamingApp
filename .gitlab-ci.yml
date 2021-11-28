@@ -8,7 +8,7 @@
 image: node:latest
 
 stages:
-  # - test
+  - test
   # - metrics
   - deploy
 
@@ -27,6 +27,25 @@ cache:
 #
 # Deploy to Heroku
 #
+
+unittests:
+  image: markhobson/node-chrome:latest
+  stage: test
+  variables:
+    NODE_ENV: development
+    # DB_USER: $DB_USER
+    # DB_PASSWORD: $DB_PASSWORD
+    # DB_HOST: $DB_HOST
+    # DB_PORT: $DB_PORT
+    # DB_DATABASE: $DB_DATABASE
+  before_script:
+    - npm install --no-optional
+  script:
+    - npm run test
+    # - npm run sonar
+  only:
+    - main
+
 Deployment:
   type: deploy
   stage: deploy

@@ -13,13 +13,7 @@ import { DeveloperService } from '../developer.service';
 export class EditDeveloperComponent implements OnInit {
   id: Number = 0;
   header: String = '';
-  developer: Developer = {
-    id: 0,
-    name: '',
-    foundedInLocation: '',
-    foundedAtDate: new Date(),
-    founders: [],
-  };
+  developer: Developer = new Developer();
   founderInput: any;
   founderList: String[] = [];
 
@@ -47,9 +41,10 @@ export class EditDeveloperComponent implements OnInit {
     let developer: Developer = {
       id: form.value.id,
       name: form.value.name,
-      foundedInLocation: form.value.foundedInLocation,
-      foundedAtDate: form.value.foundedAtDate,
+      headquartersLocation: form.value.headquartersLocation,
+      dateOfEstablishment: form.value.dateOfEstablishment,
       founders: this.founderList,
+      website: form.value.website,
     };
     if (!this.id || form.value.id === '') {
       let lastDeveloper =

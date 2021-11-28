@@ -6,7 +6,7 @@ export class Game {
   name: String = '';
   description: String = '';
   tags: String[] = [];
-  releaseDate: Date = new Date();
+  releaseDate: Date | undefined;
   developer: Developer = new Developer();
   reviews: Review[] = [];
 }

@@ -12,7 +12,6 @@ import { GameService } from '../game.service';
 export class DetailGameComponent implements OnInit {
   game: Game = new Game();
   id: Number = 0;
-  releaseDateFormatted: String = '';
 
   constructor(
     private route: ActivatedRoute,
@@ -23,9 +22,6 @@ export class DetailGameComponent implements OnInit {
     this.route.paramMap.subscribe((params) => {
       this.id = Number(params.get('id'));
       this.game = this.gameService.getGameById(this.id);
-      this.releaseDateFormatted = new Date(
-        this.game.releaseDate
-      ).toLocaleDateString();
     });
   }
 }

@@ -1,5 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
+import { DeveloperService } from '../developer/developer.service';
 import { Review } from '../review/review.model';
 import { Game } from './game.model';
 
@@ -7,6 +8,8 @@ import { Game } from './game.model';
   providedIn: 'root',
 })
 export class GameService {
+  constructor(private developerService: DeveloperService) {}
+
   games: Game[] = [
     {
       id: 1,
@@ -15,19 +18,7 @@ export class GameService {
         'Grand Theft Auto V for PC offers players the option to explore the award-winning world of Los Santos and Blaine County in resolutions of up to 4k and beyond, as well as the chance to experience the game running at 60 frames per second.',
       tags: ['Open World', 'Action', 'Multiplayer', 'Automobile Sim'],
       releaseDate: new Date(2013, 9, 17),
-      developer: {
-        id: 1,
-        name: 'Rockstar Games',
-        foundedInLocation: 'New York - USA',
-        foundedAtDate: new Date(1998, 12, 1),
-        founders: [
-          'Dan Houser',
-          'Sam Houser',
-          'Terry Donovan',
-          'Gary Foreman',
-          'Jamie King',
-        ],
-      },
+      developer: this.developerService.getDeveloperById(1),
       reviews: [],
     },
     {
@@ -37,13 +28,7 @@ export class GameService {
         'As war rages on throughout the Northern Realms, you take on the greatest contract of your life — tracking down the Child of Prophecy, a living weapon that can alter the shape of the world.',
       tags: ['Open World', 'RPG', 'Story Rich', 'Atmospheric'],
       releaseDate: new Date(2015, 5, 18),
-      developer: {
-        id: 2,
-        name: 'CD PROJEKT RED',
-        foundedInLocation: 'Poland',
-        foundedAtDate: new Date(2002, 2, 1),
-        founders: ['Michał Kiciński', 'Marcin Iwiński'],
-      },
+      developer: this.developerService.getDeveloperById(2),
       reviews: [],
     },
     {
@@ -53,13 +38,7 @@ export class GameService {
         'Pushing the boundaries of what fans have come to expect from the record-setting entertainment franchise, Call of Duty®: Black Ops II propels players into a near future Cold War',
       tags: ['Action', 'Multiplayer', 'FPS', 'Shooter', 'First-Person'],
       releaseDate: new Date(2012, 11, 12),
-      developer: {
-        id: 3,
-        name: 'Treyarch',
-        foundedInLocation: 'California - USA',
-        foundedAtDate: new Date(1998, 12, 1),
-        founders: ['Doğan Köslü', 'Peter Akemann'],
-      },
+      developer: this.developerService.getDeveloperById(3),
       reviews: [],
     },
     {
@@ -69,13 +48,7 @@ export class GameService {
         'Your Ultimate Horizon Adventure awaits! Explore the vibrant and ever-evolving open world landscapes of Mexico with limitless, fun driving action in hundreds of the world’s greatest cars. Begin Your Horizon Adventure today and add to your Wishlist!',
       tags: ['Action', 'Multiplayer', 'FPS', 'Shooter', 'Military'],
       releaseDate: new Date(2021, 11, 12),
-      developer: {
-        id: 4,
-        name: 'DICE',
-        foundedInLocation: 'Växjö - Zweden',
-        foundedAtDate: new Date(1992, 5, 1),
-        founders: ['Fredrik Liliegren', 'Olof Gustafsson', 'Andreas Axelsson'],
-      },
+      developer: this.developerService.getDeveloperById(4),
       reviews: [],
     },
     {
@@ -85,18 +58,10 @@ export class GameService {
         'Pushing the boundaries of what fans have come to expect from the record-setting entertainment franchise, Call of Duty®: Black Ops II propels players into a near future Cold War',
       tags: ['Racing', 'Open World', 'Adventure', 'Driving', 'Sports'],
       releaseDate: new Date(2021, 11, 9),
-      developer: {
-        id: 5,
-        name: 'Playground Games',
-        foundedInLocation: 'United Kingdom',
-        foundedAtDate: new Date(2010, 1, 1),
-        founders: [],
-      },
+      developer: this.developerService.getDeveloperById(5),
       reviews: [],
     },
   ];
-
-  constructor() {}
 
   getGames(): Game[] {
     console.log('getGames called');

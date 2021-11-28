@@ -12,21 +12,30 @@
       />
     </div>
     <div class="form-group">
-      <label for="">Founded in location</label>
+      <label for="">Headquarters location</label>
       <input
         type="text"
         class="form-control"
-        [ngModel]="developer.foundedInLocation"
-        name="foundedInLocation"
+        [ngModel]="developer.headquartersLocation"
+        name="headquartersLocation"
       />
     </div>
     <div class="form-group">
-      <label for="">Founded at date</label>
+      <label for="">Date of establishment</label>
       <input
         type="date"
         class="form-control"
-        [ngModel]="developer.foundedAtDate"
-        name="foundedAtDate"
+        [ngModel]="developer.dateOfEstablishment | date: 'yyyy-MM-dd'"
+        name="dateOfEstablishment"
+      />
+    </div>
+    <div class="form-group">
+      <label for="">Website</label>
+      <input
+        type="url"
+        class="form-control"
+        [ngModel]="developer.website"
+        name="website"
       />
     </div>
     <div class="form-group">

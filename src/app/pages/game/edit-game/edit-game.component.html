@@ -17,7 +17,7 @@
       <input
         type="date"
         class="form-control"
-        [ngModel]="game.releaseDate"
+        [ngModel]="game.releaseDate | date: 'yyyy-MM-dd'"
         name="releaseDate"
         required
       />
@@ -37,7 +37,7 @@
     <div class="form-group">
       <label for="">Developer</label>
       <select
-        [(ngModel)]="selectedDeveloperId"
+        [(ngModel)]="game.developer!.id"
         name="developer"
         class="form-control"
       >
