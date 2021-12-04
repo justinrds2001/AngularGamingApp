@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { NgForm } from '@angular/forms';
+import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
 import { Developer } from '../../developer/developer.model';
 import { DeveloperService } from '../../developer/developer.service';
@@ -12,7 +12,7 @@ import { GameService } from '../game.service';
   styles: [],
 })
 export class EditGameComponent implements OnInit {
-  id: Number = 0;
+  id: Number | undefined;
   header: String = '';
   game: Game = new Game();
   developer: String = '';

@@ -1,5 +1,5 @@
 export class Developer {
-  id: Number = 0;
+  id: Number | undefined;
   name: string = '';
   headquartersLocation: String = '';
   dateOfEstablishment: Date | undefined;

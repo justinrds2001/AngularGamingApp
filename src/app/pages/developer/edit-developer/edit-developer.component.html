@@ -9,7 +9,19 @@
         class="form-control"
         [ngModel]="developer.name"
         name="name"
+        required
+        minlength="4"
+        #name="ngModel"
       />
+      <span
+        *ngIf="name.invalid && (name.dirty || name.touched)"
+        class="help-block text-danger"
+      >
+        <div *ngIf="name.errors?.['required']">Name is required.</div>
+        <div *ngIf="name.errors?.['minlength']">
+          Name must be at least 4 characters long.
+        </div>
+      </span>
     </div>
     <div class="form-group">
       <label for="">Headquarters location</label>
@@ -18,7 +30,19 @@
         class="form-control"
         [ngModel]="developer.headquartersLocation"
         name="headquartersLocation"
+        required
+        minlength="4"
+        #location="ngModel"
       />
+      <span
+        *ngIf="location.invalid && (location.dirty || location.touched)"
+        class="help-block text-danger"
+      >
+        <div *ngIf="location.errors?.['required']">Location is required.</div>
+        <div *ngIf="location.errors?.['minlength']">
+          Location must be at least 4 characters long.
+        </div>
+      </span>
     </div>
     <div class="form-group">
       <label for="">Date of establishment</label>
@@ -27,7 +51,15 @@
         class="form-control"
         [ngModel]="developer.dateOfEstablishment | date: 'yyyy-MM-dd'"
         name="dateOfEstablishment"
+        required
+        #date="ngModel"
       />
+      <span
+        *ngIf="date.invalid && (date.dirty || date.touched)"
+        class="help-block text-danger"
+      >
+        <div *ngIf="date.errors?.['required']">Date is required.</div>
+      </span>
     </div>
     <div class="form-group">
       <label for="">Website</label>
@@ -36,7 +68,19 @@
         class="form-control"
         [ngModel]="developer.website"
         name="website"
+        placeholder="https://example.com"
+        required
+        #website="ngModel"
       />
+      <span
+        *ngIf="website.invalid && (website.dirty || website.touched)"
+        class="help-block text-danger"
+      >
+        <div *ngIf="website.errors?.['required']">Website is required.</div>
+        <div *ngIf="website.errors?.['appUrlvalidator']">
+          Please provide a valid format.
+        </div>
+      </span>
     </div>
     <div class="form-group">
       <div class="row">
@@ -76,7 +120,11 @@
     </div>
     <div class="row justify-content-end">
       <div class="col">
-        <button class="btn btn-primary btn-sm float-left" type="submit">
+        <button
+          class="btn btn-primary btn-sm float-left"
+          type="submit"
+          [disabled]="!f.valid"
+        >
           Save
         </button>
       </div>
