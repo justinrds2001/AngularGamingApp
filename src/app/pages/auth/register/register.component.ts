@@ -13,6 +13,7 @@ import { User } from '../user.model';
 export class RegisterComponent implements OnInit {
   user: User = new User();
   subs: Subscription | undefined;
+  registerError: any;
 
   constructor(
     private route: ActivatedRoute,
@@ -35,10 +36,15 @@ export class RegisterComponent implements OnInit {
       password: form.value.password,
       token: undefined,
     };
-    this.authService.register(user).subscribe((response) => {
-      console.log('register successful: ' + response);
+    this.authService.register(user).subscribe((res) => {
+      if (res) {
+        console.log('register successful: ' + res);
+        this.router.navigate(['../'], { relativeTo: this.route });
+      } else {
+        console.log('register failed: ' + res);
+        this.registerError = 'Username already exists';
+      }
     });
-    this.router.navigate([''], { relativeTo: this.route });
   }
 
   validEmail(control: FormControl): { [s: string]: boolean } | null {

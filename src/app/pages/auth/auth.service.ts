@@ -65,18 +65,17 @@ export class AuthService {
       );
   }
 
-  register(user: User): Observable<User | undefined> {
+  register(user: User): Observable<any> {
     console.log(user);
     const endpoint = 'register/';
     return this.http
-      .post<User>(`${this.baseUrl}${endpoint}`, user, {
+      .post<any>(`${this.baseUrl}${endpoint}`, user, {
         headers: this.headers,
       })
       .pipe(
-        map((user) => {
-          // const user = new User(response);
-          console.dir(user);
-          return user;
+        map((response) => {
+          console.log('response: ' + response);
+          return response;
         }),
         catchError((error: any) => {
           console.log('error:', error);
