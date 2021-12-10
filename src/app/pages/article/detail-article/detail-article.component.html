@@ -1,0 +1,23 @@
+<div class="jumbotron text-center">
+  <h1 class="jumbotron-header">{{ article.title }}</h1>
+  <div class="lead">
+    <a [routerLink]="['/game/', article.game._id]"
+      ><b>{{ article.game.name }}</b></a
+    >
+  </div>
+  <div *ngIf="article.subjects.length != 0" class="lead text-muted">
+    <p>{{ article.subjects.join(", ") }}</p>
+  </div>
+  <div *ngIf="article.subjects.length === 0" class="lead text-muted">
+    <p>No subjects available</p>
+  </div>
+</div>
+
+<div class="text-center border">
+  {{ article.content }}
+</div>
+
+<br />
+<p class="text-muted">
+  Uploaded at: {{ article.postDate | date: "dd/MM/yyyy" }}
+</p>

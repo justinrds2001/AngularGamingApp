@@ -1,46 +1,68 @@
 import { HttpClient } from '@angular/common/http';
 import { TestBed } from '@angular/core/testing';
 import { of } from 'rxjs';
+import { User } from '../auth/user.model';
+import { Developer } from '../developer/developer.model';
 import { Game } from './game.model';
 import { GameService } from './game.service';
 
+const expectedUserData: User = {
+  _id: '619bdb5e3b174a700c923de8',
+  username: 'Justinrds2001',
+  password: 'password',
+  token: 'some.dummy.token',
+};
+
+const expectedDev: Developer = {
+  _id: '61b2446245f6dcea1eb7f05b',
+  name: 'Test company',
+  headquartersLocation: 'The Netherlands',
+  dateOfEstablishment: new Date(),
+  founders: ['Justin'],
+  website: new URL('https://www.bol.com/'),
+  createdBy: expectedUserData,
+};
+
+// Global mock objects
 const expectedGames: Game[] = [
   {
-    id: 1,
-    name: 'Grand Theft Auto 5',
+    _id: '61b2450845f6dcea1eb7f06f',
+    name: 'Test Game',
+    description: 'daskdjhb alhksdbvsakhdklshavdb lkhsadasdad',
+    releaseDate: new Date(),
+    developer: expectedDev,
+    tags: ['testtag'],
+    createdBy: expectedUserData,
+  },
+  {
+    _id: '61b2495845f6dcea1eb7f0a1',
+    name: 'Grand Theft Auto 6',
     description:
-      'Grand Theft Auto V for PC offers players the option to explore the award-winning world of Los Santos and Blaine County in resolutions of up to 4k and beyond, as well as the chance to experience the game running at 60 frames per second.',
-    tags: ['Open World', 'Action', 'Multiplayer', 'Automobile Sim'],
-    releaseDate: new Date(2013, 9, 17),
-    developer: {
-      id: 1,
-      name: 'Rockstar Games',
-      headquartersLocation: 'New York - USA',
-      dateOfEstablishment: new Date(1998, 12, 1),
-      founders: [
-        'Dan Houser',
-        'Sam Houser',
-        'Terry Donovan',
-        'Gary Foreman',
-        'Jamie King',
-      ],
-      website: new URL('https://www.rockstargames.com/'),
-    },
-    reviews: [],
+      'dsaliduhba lihdbaslkhvbskalihvbdkashjsvd likashbdlkahsvdkjhas a dsadasdasdasda',
+    releaseDate: new Date(),
+    developer: expectedDev,
+    tags: ['dasda', 'dasda'],
+    createdBy: expectedUserData,
   },
 ];
 
 describe('GameService', () => {
   let service: GameService;
+  let httpSpy: any;
   // let httpSpy: jasmine.SpyObj<HttpClient>;
 
   beforeEach(() => {
-    // httpSpy = jasmine.createSpyObj('HttpClient', ['get', 'post']);
-    /*TestBed.configureTestingModule({
+    httpSpy = jasmine.createSpyObj('HttpClient', [
+      'get',
+      'post',
+      'put',
+      'delete',
+    ]);
+    TestBed.configureTestingModule({
       providers: [{ provide: HttpClient, useValue: httpSpy }],
-    });*/
+    });
     service = TestBed.inject(GameService);
-    // httpSpy = TestBed.inject(HttpClient) as jasmine.SpyObj<HttpClient>;
+    httpSpy = TestBed.inject(HttpClient) as jasmine.SpyObj<HttpClient>;
   });
 
   it('should be created', () => {
@@ -48,89 +70,66 @@ describe('GameService', () => {
   });
 
   it('should return a list of movies', (done: DoneFn) => {
-    // httpSpy.get.and.returnValue(of(expectedGames));
-    service.getGamesAsObservable().subscribe((games: Game[]) => {
+    httpSpy.get.and.returnValue(of(expectedGames));
+    service.getGames().subscribe((games: Game[]) => {
       console.log(games);
-      expect(games.length).toBe(5);
-      expect(games[0].id).toEqual(expectedGames[0].id);
+      expect(games.length).toBe(2);
+      expect(games[0]._id).toEqual(expectedGames[0]._id);
       done();
     });
   });
 
   it('should return a single game with given id', (done: DoneFn) => {
-    // httpSpy.get.and.returnValue(of(expectedGames));
-    let game = service.getGameById(1);
-    console.log(game);
-    expect(game.id).toEqual(expectedGames[0].id);
-    done();
+    httpSpy.get.and.returnValue(of(expectedGames[0]));
+    service.getGameById('61b2446245f6dcea1eb7f05b').subscribe((game) => {
+      console.log(game);
+      expect(game._id).toEqual(expectedGames[0]._id);
+      done();
+    });
   });
 
   it('should add a game', (done: DoneFn) => {
-    // httpSpy.get.and.returnValue(of(expectedGames));
-    let game = {
-      id: 6,
-      name: 'Grand Theft Auto 6',
-      description: 'test',
-      tags: ['Open World'],
+    const gameToAdd: Game = {
+      _id: '61b2450845f6dcea1eb7f06f',
+      name: 'Test Game',
+      description: 'daskdjhb alhksdbvsakhdklshavdb lkhsadasdad',
       releaseDate: new Date(),
-      developer: {
-        id: 10,
-        name: 'JRDS Games',
-        headquartersLocation: 'The Netherlands',
-        dateOfEstablishment: new Date(),
-        founders: ['Justin Rodrigues da Silva'],
-        website: new URL('https://www.bol.com/'),
-      },
-      reviews: [],
+      developer: expectedDev,
+      tags: ['testtag'],
+      createdBy: expectedUserData,
     };
-    console.log(game);
-    service.addGame(game);
-    service.getGamesAsObservable().subscribe((games: Game[]) => {
-      console.log(games);
-      expect(games.length).toBe(6);
-      expect(games[games.length - 1].id).toEqual(game.id);
+    httpSpy.post.and.returnValue(of(gameToAdd));
+    service.addGame(gameToAdd).subscribe((game: Game) => {
+      console.log(game);
+      expect(game.name).toBe(gameToAdd.name);
+      expect(game._id).toEqual(gameToAdd._id);
       done();
     });
   });
 
   it('should update a game with given id', (done: DoneFn) => {
-    // httpSpy.get.and.returnValue(of(expectedGames));
-    let updatedGame = {
-      id: 1,
-      name: 'Grand Theft Auto 5 (Updated)',
-      description:
-        'Grand Theft Auto V for PC offers players the option to explore the award-winning world of Los Santos and Blaine County in resolutions of up to 4k and beyond, as well as the chance to experience the game running at 60 frames per second.',
-      tags: ['Open World', 'Action', 'Multiplayer', 'Automobile Sim'],
-      releaseDate: new Date(2013, 9, 17),
-      developer: {
-        id: 1,
-        name: 'Rockstar Games',
-        headquartersLocation: 'New York - USA',
-        dateOfEstablishment: new Date(1998, 12, 1),
-        founders: [
-          'Dan Houser',
-          'Sam Houser',
-          'Terry Donovan',
-          'Gary Foreman',
-          'Jamie King',
-        ],
-        website: new URL('https://www.bol.com/'),
-      },
-      reviews: [],
+    const gameToUpdate: Game = {
+      _id: '61b2450845f6dcea1eb7f06f',
+      name: 'Test Game (updated)',
+      description: 'daskdjhb alhksdbvsakhdklshavdb lkhsadasdad',
+      releaseDate: new Date(),
+      developer: expectedDev,
+      tags: ['testtag'],
+      createdBy: expectedUserData,
     };
-    console.log(updatedGame);
-    service.updateGame(updatedGame);
-    let game = service.getGameById(1);
-    expect(game.name).toEqual('Grand Theft Auto 5 (Updated)');
-    done();
+    httpSpy.put.and.returnValue(of(gameToUpdate));
+    service.updateGame(gameToUpdate._id, gameToUpdate).subscribe((game) => {
+      expect(game._id).toEqual(gameToUpdate._id);
+      expect(game.name).toEqual(gameToUpdate.name);
+      done();
+    });
   });
 
   it('should delete a game with given id', (done: DoneFn) => {
-    // httpSpy.get.and.returnValue(of(expectedGames));
-    service.removeGame(1);
-    service.getGamesAsObservable().subscribe((games: Game[]) => {
-      console.log(games);
-      expect(games.length).toBe(4);
+    httpSpy.delete.and.returnValue(of(expectedGames[0]));
+    service.removeGame(expectedGames).subscribe((game) => {
+      expect(game._id).toEqual(expectedGames[0]._id);
+      expect(game.name).toEqual(expectedGames[0].name);
       done();
     });
   });

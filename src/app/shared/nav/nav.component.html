@@ -15,12 +15,28 @@
         <li class="nav-item">
           <a class="nav-link" routerLink="developer">Developers</a>
         </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="article">Articles</a>
+        </li>
       </ul>
     </div>
-    <div class="col-sm-3 align-self-end">
+    <div class="col-sm-4 align-self-end" *ngIf="!user">
       <ul class="navbar-nav flex-grow-1">
         <li class="nav-item">
-          <a class="nav-link" routerLink="about/about-us">About us</a>
+          <a class="nav-link" routerLink="login">Sign in</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" routerLink="register">Register</a>
+        </li>
+      </ul>
+    </div>
+    <div class="col-sm-4 align-self-end" *ngIf="user">
+      <ul class="navbar-nav flex-grow-1">
+        <li class="nav-item">
+          <a class="nav-link">Welcome {{ user.username }}</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link" (click)="logout()">Log out</a>
         </li>
       </ul>
     </div>

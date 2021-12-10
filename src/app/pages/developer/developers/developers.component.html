@@ -6,8 +6,8 @@
   <a routerLink="add" class="btn btn-primary">Add Developer</a>
   <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3">
     <div class="col entities" *ngFor="let developer of developers">
-      <a [routerLink]="[developer.id]">
-        <div class="card developer" style="width: 18rem">
+      <a [routerLink]="[developer._id]">
+        <div class="card developer" style="width: 18rem; height: 27rem">
           <img
             class="card-img-top list-img"
             src="../../../../assets/images/developer.jpg"
@@ -21,13 +21,13 @@
             <p *ngIf="developer.founders.length === 0" class="card-text">
               <b>founders</b>: None available
             </p>
-            <div class="list-inline">
+            <div class="list-inline" *ngIf="canEdit(developer.createdBy)">
               <a
                 class="btn btn-danger btn-sm"
                 (click)="
                   $event.preventDefault();
                   $event.stopPropagation();
-                  onDelete(developer.id!)
+                  onDelete(developer._id!)
                 "
               >
                 <svg
@@ -45,7 +45,7 @@
               </a>
               <a
                 class="btn btn-primary btn-sm"
-                [routerLink]="['edit', developer.id]"
+                [routerLink]="['edit', developer._id]"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

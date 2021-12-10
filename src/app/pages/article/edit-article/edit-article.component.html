@@ -1,0 +1,118 @@
+<div class="container">
+  <h2>{{ header }}</h2>
+
+  <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+    <div class="form-group">
+      <label for="">Title</label>
+      <input
+        type="text"
+        class="form-control"
+        [ngModel]="article.title"
+        name="title"
+        required
+        minlength="4"
+        #title="ngModel"
+      />
+      <span
+        *ngIf="title.invalid && (title.dirty || title.touched)"
+        class="help-block text-danger"
+      >
+        <div *ngIf="title.errors?.['required']">Title is required.</div>
+        <div *ngIf="title.errors?.['minlength']">
+          Title must be at least 4 characters long.
+        </div>
+      </span>
+    </div>
+    <div class="form-group">
+      <label for="">Content</label>
+      <textarea
+        rows="4"
+        cols="50"
+        type="text"
+        class="form-control"
+        [ngModel]="article.content"
+        name="content"
+        required
+        minlength="50"
+        #location="ngModel"
+      ></textarea>
+      <span
+        *ngIf="location.invalid && (location.dirty || location.touched)"
+        class="help-block text-danger"
+      >
+        <div *ngIf="location.errors?.['required']">Location is required.</div>
+        <div *ngIf="location.errors?.['minlength']">
+          Content must be at least 50 characters long.
+        </div>
+      </span>
+    </div>
+    <div class="form-group">
+      <label for="">Game</label>
+      <select
+        [(ngModel)]="article.game._id"
+        class="form-control"
+        name="game"
+        #game="ngModel"
+        required
+      >
+        <option [ngValue]="undefined">Select a game</option>
+        <option *ngFor="let game of games" [value]="game._id">
+          {{ game.name }}
+        </option>
+      </select>
+      <span
+        *ngIf="game.invalid && (game.dirty || game.touched)"
+        class="help-block text-danger"
+      >
+        <div *ngIf="game.errors?.['required']">Game is required.</div>
+      </span>
+    </div>
+    <div class="form-group">
+      <div class="row">
+        <div class="col-md-4">
+          <label for="">Subject</label>
+          <input
+            type="text"
+            class="form-control"
+            [(ngModel)]="subjectInput"
+            [ngModelOptions]="{ standalone: true }"
+          />
+          <p>
+            <button
+              type="button"
+              class="btn btn-info btn-sm mt-3"
+              (click)="addSubject()"
+              [disabled]="!subjectInput"
+            >
+              Add subject
+            </button>
+          </p>
+          <div class="row" *ngFor="let subject of subjectList">
+            <div class="col-10">
+              {{ subject }}
+            </div>
+            <div class="col-2">
+              <a
+                type="button"
+                class="btn btn-danger m-1"
+                (click)="deleteSubject(subject)"
+                >Delete</a
+              >
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="row justify-content-end">
+      <div class="col">
+        <button
+          class="btn btn-primary btn-sm float-left"
+          type="submit"
+          [disabled]="!f.valid"
+        >
+          Save
+        </button>
+      </div>
+    </div>
+  </form>
+</div>

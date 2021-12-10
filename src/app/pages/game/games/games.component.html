@@ -6,7 +6,7 @@
   <a routerLink="add" class="btn btn-primary">Add Game</a>
   <div class="row row-cols-1 row-cols-sm-1 row-cols-md-2 row-cols-lg-3">
     <div class="col entities" *ngFor="let game of games">
-      <a [routerLink]="[game.id]">
+      <a [routerLink]="[game._id]">
         <div class="card game" style="width: 18rem; height: 27rem">
           <img
             class="card-img-top list-img"
@@ -21,13 +21,13 @@
             <p *ngIf="game.tags.length === 0" class="card-text">
               <b>tags</b>: None available
             </p>
-            <div class="list-inline">
+            <div class="list-inline" *ngIf="canEdit(game.createdBy)">
               <a
                 class="btn btn-danger btn-sm"
                 (click)="
                   $event.preventDefault();
                   $event.stopPropagation();
-                  onDelete(game.id!)
+                  onDelete(game._id!)
                 "
               >
                 <svg
@@ -45,7 +45,7 @@
               </a>
               <a
                 class="btn btn-primary btn-sm"
-                [routerLink]="['edit', game.id]"
+                [routerLink]="['edit', game._id]"
               >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"

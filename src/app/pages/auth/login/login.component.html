@@ -1,0 +1,58 @@
+<div class="container">
+  <div class="row justify-content-center">
+    <form (ngSubmit)="onSubmit(f)" #f="ngForm">
+      <span *ngIf="loginError" class="help-block text-danger">
+        {{ loginError }}
+      </span>
+      <div class="form-group">
+        <label for="">Username</label>
+        <input
+          type="text"
+          class="form-control"
+          [ngModel]="userInfo.username"
+          name="username"
+          required
+          minlength="4"
+          #username="ngModel"
+        />
+        <span
+          *ngIf="username.invalid && (username.dirty || username.touched)"
+          class="help-block text-danger"
+        >
+          <div *ngIf="username.errors?.['required']">Username is required.</div>
+          <div *ngIf="username.errors?.['minlength']">
+            Username must be at least 4 characters long.
+          </div>
+        </span>
+        <div class="form-group">
+          <label for="inputPassword">Password</label>
+          <input
+            type="password"
+            class="form-control"
+            [ngModel]="userInfo.password"
+            name="password"
+            required
+            minlength="4"
+            #password="ngModel"
+          />
+          <span
+            *ngIf="password.invalid && (password.dirty || password.touched)"
+            class="help-block text-danger"
+          >
+            <div *ngIf="password.errors?.['required']">Name is required.</div>
+            <div *ngIf="password.errors?.['minlength']">
+              Password must be at least 4 characters long.
+            </div>
+          </span>
+        </div>
+        <button
+          class="btn btn-primary btn-sm float-left"
+          [disabled]="!f.valid"
+          type="submit"
+        >
+          Sign in
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

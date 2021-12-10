@@ -73,14 +73,14 @@
     <div class="form-group">
       <label for="">Developer</label>
       <select
-        [(ngModel)]="game.developer.id"
+        [(ngModel)]="game.developer._id"
         name="developer"
         class="form-control"
         #developer="ngModel"
         required
       >
         <option [ngValue]="undefined">Select a developer</option>
-        <option *ngFor="let developer of developers" [value]="developer.id">
+        <option *ngFor="let developer of developers" [value]="developer._id">
           {{ developer.name }}
         </option>
       </select>

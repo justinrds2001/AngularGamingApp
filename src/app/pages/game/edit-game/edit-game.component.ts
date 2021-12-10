@@ -1,6 +1,8 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormControl, FormGroup, NgForm, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
+import { AuthService } from '../../auth/auth.service';
 import { Developer } from '../../developer/developer.model';
 import { DeveloperService } from '../../developer/developer.service';
 import { Game } from '../game.model';
@@ -11,70 +13,82 @@ import { GameService } from '../game.service';
   templateUrl: './edit-game.component.html',
   styles: [],
 })
-export class EditGameComponent implements OnInit {
-  id: Number | undefined;
+export class EditGameComponent implements OnInit, OnDestroy {
+  id: any;
   header: String = '';
   game: Game = new Game();
   developer: String = '';
   inputString: any;
   tagList: String[] = [];
   developers: Developer[] = [];
+  subscription?: Subscription;
 
   constructor(
     private route: ActivatedRoute,
     private gameService: GameService,
     private developerService: DeveloperService,
+    private authService: AuthService,
     private router: Router
   ) {}
 
   ngOnInit(): void {
     this.route.paramMap.subscribe((params) => {
-      this.id = Number(params.get('id'));
+      this.id = params.get('id');
       this.header = !this.id ? 'Add Game' : 'Edit Game';
-      this.developers = this.developerService.developers;
-      if (this.id) {
-        this.game = this.gameService.getGameById(this.id);
-        this.tagList = this.game.tags.concat();
-      } else {
-        this.game = new Game();
-      }
+      this.subscription = this.developerService
+        .getDevelopers()
+        .subscribe((developers) => {
+          this.developers = developers;
+          if (this.id) {
+            this.gameService.getGameById(this.id).subscribe((game) => {
+              this.game = game;
+              this.tagList = this.game.tags.concat();
+            });
+          } else {
+            this.game = new Game();
+          }
+        });
     });
+  }
+
+  ngOnDestroy(): void {
+    console.log('ngOnDestroy() called');
+    this.subscription?.unsubscribe();
   }
 
   onSubmit(form: NgForm) {
     let game: Game = {
-      id: form.value.id,
+      _id: undefined,
       name: form.value.name,
       description: form.value.description,
       releaseDate: form.value.releaseDate,
       tags: this.tagList,
       developer: form.value.developer,
-      reviews: [],
+      createdBy: form.value.createdBy,
     };
-    let developer = this.developerService.getDeveloperById(
-      form.value.developer
-    );
-    game.developer = developer;
-    console.log('OnSubmit: ' + form.value.developer);
-    console.log('OnSubmit: ' + game.developer.name);
-
-    if (!this.id || form.value.id === '') {
-      let lastGame = this.gameService.games[this.gameService.games.length - 1];
-      if (lastGame) {
-        game.id = +lastGame.id! + 1;
-      } else {
-        game.id = 1;
-      }
-      console.log(game);
-      console.log('addGame() called');
-      this.gameService.addGame(game);
-    } else {
-      game.id = this.id;
-      console.log(game);
-      console.log('updateGame() called');
-      this.gameService.updateGame(game);
-    }
-    this.router.navigateByUrl('');
+    this.authService.currentUser$.subscribe((user) => {
+      game.createdBy = user!;
+      this.developerService
+        .getDeveloperById(form.value.developer)
+        .subscribe((developer) => {
+          game.developer = developer;
+          console.log('OnSubmit: ' + form.value.developer);
+          console.log('OnSubmit: ' + game.developer.name);
+          if (!this.id || form.value.id === '') {
+            this.gameService.addGame(game).subscribe((game) => {
+              console.log('added game' + game);
+            });
+          } else {
+            console.log(game);
+            this.gameService
+              .updateGame(this.id, game)
+              .subscribe((updatedGame) => {
+                console.log('updated game' + updatedGame);
+              });
+          }
+          this.router.navigateByUrl('');
+        });
+    });
   }
 
   addTag() {
