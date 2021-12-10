@@ -77,6 +77,7 @@ export class EditGameComponent implements OnInit, OnDestroy {
           if (!this.id || form.value.id === '') {
             this.gameService.addGame(game).subscribe((game) => {
               console.log('added game' + game);
+              this.router.navigate(['../'], { relativeTo: this.route });
             });
           } else {
             console.log(game);
@@ -84,9 +85,9 @@ export class EditGameComponent implements OnInit, OnDestroy {
               .updateGame(this.id, game)
               .subscribe((updatedGame) => {
                 console.log('updated game' + updatedGame);
+                this.router.navigate(['../../'], { relativeTo: this.route });
               });
           }
-          this.router.navigateByUrl('');
         });
     });
   }

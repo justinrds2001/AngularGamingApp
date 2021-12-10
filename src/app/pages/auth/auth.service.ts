@@ -76,8 +76,6 @@ export class AuthService {
         map((user) => {
           // const user = new User(response);
           console.dir(user);
-          this.saveUserToLocalStorage(user);
-          this.currentUser$.next(user);
           return user;
         }),
         catchError((error: any) => {

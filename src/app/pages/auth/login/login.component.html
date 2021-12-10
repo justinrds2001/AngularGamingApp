@@ -39,7 +39,9 @@
             *ngIf="password.invalid && (password.dirty || password.touched)"
             class="help-block text-danger"
           >
-            <div *ngIf="password.errors?.['required']">Name is required.</div>
+            <div *ngIf="password.errors?.['required']">
+              Password is required.
+            </div>
             <div *ngIf="password.errors?.['minlength']">
               Password must be at least 4 characters long.
             </div>

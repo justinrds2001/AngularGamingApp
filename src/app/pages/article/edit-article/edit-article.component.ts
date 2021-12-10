@@ -72,6 +72,7 @@ export class EditArticleComponent implements OnInit {
         if (!this.id || form.value.id === '') {
           this.articleService.addArticle(article).subscribe((article) => {
             console.log('added article' + article);
+            this.router.navigate(['../'], { relativeTo: this.route });
           });
         } else {
           console.log(article);
@@ -79,9 +80,9 @@ export class EditArticleComponent implements OnInit {
             .updateArticle(this.id, article)
             .subscribe((updatedArticle) => {
               console.log('updated article' + updatedArticle);
+              this.router.navigate(['../../'], { relativeTo: this.route });
             });
         }
-        this.router.navigate(['../../'], { relativeTo: this.route });
       });
     });
   }
