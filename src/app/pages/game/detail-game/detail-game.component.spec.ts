@@ -114,7 +114,8 @@ describe('EditGameComponent', () => {
     gameServiceSpy.getGameById.and.returnValue(of(expectedGame));
 
     // Deze zijn nodig zodat we in ngOnDestroy kunnen unsubsciben.
-    component.subscription = new Subscription();
+    component.routeSubscription = new Subscription();
+    component.gameSubscription = new Subscription();
 
     fixture.detectChanges();
     expect(component).toBeTruthy();

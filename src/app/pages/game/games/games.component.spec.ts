@@ -133,7 +133,8 @@ describe('GamesComponent', () => {
   it('should create', (done) => {
     gameServiceSpy.getGames.and.returnValue(of(expectedGames));
 
-    component.subscription = new Subscription();
+    component.gamesSubscription = new Subscription();
+    component.deleteSubscription = new Subscription();
 
     fixture.detectChanges();
     expect(component).toBeTruthy();

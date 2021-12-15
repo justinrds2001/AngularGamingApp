@@ -21,7 +21,12 @@ export class EditGameComponent implements OnInit, OnDestroy {
   inputString: any;
   tagList: String[] = [];
   developers: Developer[] = [];
-  subscription?: Subscription;
+  routeSubscription?: Subscription;
+  devsSubscription?: Subscription;
+  devSubscription?: Subscription;
+  userSubscription?: Subscription;
+  gameSubscription?: Subscription;
+  editGameSubscription?: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -32,18 +37,20 @@ export class EditGameComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
+    this.routeSubscription = this.route.paramMap.subscribe((params) => {
       this.id = params.get('id');
       this.header = !this.id ? 'Add Game' : 'Edit Game';
-      this.subscription = this.developerService
+      this.devsSubscription = this.developerService
         .getDevelopers()
         .subscribe((developers) => {
           this.developers = developers;
           if (this.id) {
-            this.gameService.getGameById(this.id).subscribe((game) => {
-              this.game = game;
-              this.tagList = this.game.tags.concat();
-            });
+            this.gameSubscription = this.gameService
+              .getGameById(this.id)
+              .subscribe((game) => {
+                this.game = game;
+                this.tagList = this.game.tags.concat();
+              });
           } else {
             this.game = new Game();
           }
@@ -53,7 +60,12 @@ export class EditGameComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     console.log('ngOnDestroy() called');
-    this.subscription?.unsubscribe();
+    this.routeSubscription?.unsubscribe();
+    this.devsSubscription?.unsubscribe();
+    this.devSubscription?.unsubscribe();
+    this.userSubscription?.unsubscribe();
+    this.gameSubscription?.unsubscribe();
+    this.editGameSubscription?.unsubscribe();
   }
 
   onSubmit(form: NgForm) {
@@ -66,22 +78,24 @@ export class EditGameComponent implements OnInit, OnDestroy {
       developer: form.value.developer,
       createdBy: form.value.createdBy,
     };
-    this.authService.currentUser$.subscribe((user) => {
+    this.userSubscription = this.authService.currentUser$.subscribe((user) => {
       game.createdBy = user!;
-      this.developerService
+      this.devSubscription = this.developerService
         .getDeveloperById(form.value.developer)
         .subscribe((developer) => {
           game.developer = developer;
           console.log('OnSubmit: ' + form.value.developer);
           console.log('OnSubmit: ' + game.developer.name);
           if (!this.id || form.value.id === '') {
-            this.gameService.addGame(game).subscribe((game) => {
-              console.log('added game' + game);
-              this.router.navigate(['../'], { relativeTo: this.route });
-            });
+            this.editGameSubscription = this.gameService
+              .addGame(game)
+              .subscribe((game) => {
+                console.log('added game' + game);
+                this.router.navigate(['../'], { relativeTo: this.route });
+              });
           } else {
             console.log(game);
-            this.gameService
+            this.editGameSubscription = this.gameService
               .updateGame(this.id, game)
               .subscribe((updatedGame) => {
                 console.log('updated game' + updatedGame);

@@ -20,7 +20,12 @@ export class EditArticleComponent implements OnInit {
   subjectInput: any;
   subjectList: String[] = [];
   games: Game[] = [];
-  subscription?: Subscription;
+  routeSubscription?: Subscription;
+  gamesSubscription?: Subscription;
+  gameSubscription?: Subscription;
+  userSubscription?: Subscription;
+  articleSubscription?: Subscription;
+  editArticleSubscription?: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -31,26 +36,35 @@ export class EditArticleComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
+    this.routeSubscription = this.route.paramMap.subscribe((params) => {
       this.id = params.get('id');
       this.header = !this.id ? 'Add Article' : 'Edit Article';
-      this.subscription = this.gameService.getGames().subscribe((games) => {
-        this.games = games;
-        if (this.id) {
-          this.articleService.getArticleById(this.id).subscribe((article) => {
-            this.article = article;
-            this.subjectList = this.article.subjects.concat();
-          });
-        } else {
-          this.article = new Article();
-        }
-      });
+      this.gamesSubscription = this.gameService
+        .getGames()
+        .subscribe((games) => {
+          this.games = games;
+          if (this.id) {
+            this.articleSubscription = this.articleService
+              .getArticleById(this.id)
+              .subscribe((article) => {
+                this.article = article;
+                this.subjectList = this.article.subjects.concat();
+              });
+          } else {
+            this.article = new Article();
+          }
+        });
     });
   }
 
   ngOnDestroy(): void {
     console.log('ngOnDestroy() called');
-    this.subscription?.unsubscribe();
+    this.routeSubscription?.unsubscribe();
+    this.gamesSubscription?.unsubscribe();
+    this.gameSubscription?.unsubscribe();
+    this.userSubscription?.unsubscribe();
+    this.articleSubscription?.unsubscribe();
+    this.editArticleSubscription?.unsubscribe();
   }
 
   onSubmit(form: NgForm) {
@@ -63,27 +77,31 @@ export class EditArticleComponent implements OnInit {
       game: form.value.game,
       createdBy: form.value.createdBy,
     };
-    this.authService.currentUser$.subscribe((user) => {
+    this.userSubscription = this.authService.currentUser$.subscribe((user) => {
       article.createdBy = user!;
-      this.gameService.getGameById(form.value.game).subscribe((game) => {
-        article.game = game;
-        console.log('OnSubmit: ' + form.value.game);
-        console.log('OnSubmit: ' + article.game.name);
-        if (!this.id || form.value.id === '') {
-          this.articleService.addArticle(article).subscribe((article) => {
-            console.log('added article' + article);
-            this.router.navigate(['../'], { relativeTo: this.route });
-          });
-        } else {
-          console.log(article);
-          this.articleService
-            .updateArticle(this.id, article)
-            .subscribe((updatedArticle) => {
-              console.log('updated article' + updatedArticle);
-              this.router.navigate(['../../'], { relativeTo: this.route });
-            });
-        }
-      });
+      this.gameSubscription = this.gameService
+        .getGameById(form.value.game)
+        .subscribe((game) => {
+          article.game = game;
+          console.log('OnSubmit: ' + form.value.game);
+          console.log('OnSubmit: ' + article.game.name);
+          if (!this.id || form.value.id === '') {
+            this.editArticleSubscription = this.articleService
+              .addArticle(article)
+              .subscribe((article) => {
+                console.log('added article' + article);
+                this.router.navigate(['../'], { relativeTo: this.route });
+              });
+          } else {
+            console.log(article);
+            this.editArticleSubscription = this.articleService
+              .updateArticle(this.id, article)
+              .subscribe((updatedArticle) => {
+                console.log('updated article' + updatedArticle);
+                this.router.navigate(['../../'], { relativeTo: this.route });
+              });
+          }
+        });
     });
   }
 

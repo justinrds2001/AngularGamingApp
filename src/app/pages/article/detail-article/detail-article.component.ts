@@ -12,7 +12,8 @@ import { ArticleService } from '../article.service';
 export class DetailArticleComponent implements OnInit {
   article: Article = new Article();
   id: any;
-  subscription?: Subscription;
+  routeSubscription?: Subscription;
+  articleSubscription?: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -20,17 +21,20 @@ export class DetailArticleComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
+    this.routeSubscription = this.route.paramMap.subscribe((params) => {
       this.id = params.get('id');
-      this.articleService.getArticleById(this.id).subscribe((article) => {
-        this.article = article;
-        console.log('component article: ' + this.article);
-      });
+      this.articleSubscription = this.articleService
+        .getArticleById(this.id)
+        .subscribe((article) => {
+          this.article = article;
+          console.log('component article: ' + this.article);
+        });
     });
   }
 
   ngOnDestroy(): void {
     console.log('ngOnDestroy() called');
-    this.subscription?.unsubscribe();
+    this.routeSubscription?.unsubscribe();
+    this.articleSubscription?.unsubscribe();
   }
 }

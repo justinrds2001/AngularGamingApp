@@ -14,7 +14,8 @@ import { GameService } from '../game.service';
 export class DetailGameComponent implements OnInit, OnDestroy {
   game: Game = new Game();
   id: any;
-  subscription?: Subscription;
+  routeSubscription?: Subscription;
+  gameSubscription?: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -22,17 +23,20 @@ export class DetailGameComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
+    this.routeSubscription = this.route.paramMap.subscribe((params) => {
       this.id = params.get('id');
-      this.gameService.getGameById(this.id).subscribe((game) => {
-        this.game = game;
-        console.log('component game: ' + this.game);
-      });
+      this.gameSubscription = this.gameService
+        .getGameById(this.id)
+        .subscribe((game) => {
+          this.game = game;
+          console.log('component game: ' + this.game);
+        });
     });
   }
 
   ngOnDestroy(): void {
     console.log('ngOnDestroy() called');
-    this.subscription?.unsubscribe();
+    this.routeSubscription?.unsubscribe();
+    this.gameSubscription?.unsubscribe();
   }
 }

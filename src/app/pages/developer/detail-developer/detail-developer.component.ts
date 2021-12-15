@@ -12,7 +12,8 @@ import { DeveloperService } from '../developer.service';
 export class DetailDeveloperComponent implements OnInit, OnDestroy {
   developer: Developer = new Developer();
   id: any;
-  subscription?: Subscription;
+  devSubscription?: Subscription;
+  routeSubscription?: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -20,9 +21,9 @@ export class DetailDeveloperComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
+    this.routeSubscription = this.route.paramMap.subscribe((params) => {
       this.id = params.get('id');
-      this.subscription = this.developerService
+      this.devSubscription = this.developerService
         .getDeveloperById(this.id)
         .subscribe((developer) => {
           this.developer = developer;
@@ -32,6 +33,7 @@ export class DetailDeveloperComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     console.log('ngOnDestroy() called');
-    this.subscription?.unsubscribe();
+    this.devSubscription?.unsubscribe();
+    this.routeSubscription?.unsubscribe();
   }
 }

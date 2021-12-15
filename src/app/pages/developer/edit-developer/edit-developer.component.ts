@@ -18,7 +18,10 @@ export class EditDeveloperComponent implements OnInit, OnDestroy {
   developer: Developer = new Developer();
   founderInput: any;
   founderList: String[] = [];
-  subscription?: Subscription;
+  routeSubscription?: Subscription;
+  devSubscription?: Subscription;
+  editDevSubscription?: Subscription;
+  userSubscription?: Subscription;
 
   constructor(
     private route: ActivatedRoute,
@@ -28,11 +31,11 @@ export class EditDeveloperComponent implements OnInit, OnDestroy {
   ) {}
 
   ngOnInit(): void {
-    this.route.paramMap.subscribe((params) => {
+    this.routeSubscription = this.route.paramMap.subscribe((params) => {
       this.id = params.get('id');
       this.header = !this.id ? 'Add Developer' : 'Edit Developer';
       if (this.id) {
-        this.subscription = this.developerService
+        this.devSubscription = this.developerService
           .getDeveloperById(this.id)
           .subscribe((developer) => {
             this.developer = developer;
@@ -46,7 +49,10 @@ export class EditDeveloperComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     console.log('ngOnDestroy() called');
-    this.subscription?.unsubscribe();
+    this.routeSubscription?.unsubscribe();
+    this.devSubscription?.unsubscribe();
+    this.editDevSubscription?.unsubscribe();
+    this.userSubscription?.unsubscribe();
   }
 
   onSubmit(form: NgForm) {
@@ -59,14 +65,17 @@ export class EditDeveloperComponent implements OnInit, OnDestroy {
       website: form.value.website,
       createdBy: form.value.createdBy,
     };
-    this.authService.currentUser$.subscribe((user) => {
+    this.userSubscription = this.authService.currentUser$.subscribe((user) => {
       developer.createdBy = user!;
       if (!this.id || form.value.id === '') {
         console.log(developer);
         console.log('addDeveloper() called');
-        this.developerService.addDeveloper(developer).subscribe(() => {
-          this.router.navigate(['../'], { relativeTo: this.route });
-        });
+        this.editDevSubscription = this.developerService
+          .addDeveloper(developer)
+          .subscribe((developer) => {
+            console.log('added developer' + developer);
+            this.router.navigate(['../'], { relativeTo: this.route });
+          });
       } else {
         console.log(developer);
         console.log('updateDeveloper() called');

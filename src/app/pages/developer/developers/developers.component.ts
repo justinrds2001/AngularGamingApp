@@ -11,7 +11,8 @@ import { DeveloperService } from '../developer.service';
 })
 export class DevelopersComponent implements OnInit, OnDestroy {
   developers: Developer[] = [];
-  subscription?: Subscription;
+  devsSubscription?: Subscription;
+  deleteSubscription?: Subscription;
 
   constructor(
     private developerService: DeveloperService,
@@ -20,33 +21,35 @@ export class DevelopersComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     console.log('ngOnInit() called');
-    this.subscription = this.developerService
+    this.devsSubscription = this.developerService
       .getDevelopers()
       .subscribe((developers) => (this.developers = developers));
   }
 
   ngOnDestroy(): void {
     console.log('ngOnDestroy() called');
-    this.subscription?.unsubscribe();
+    this.devsSubscription?.unsubscribe();
+    this.deleteSubscription?.unsubscribe();
   }
 
   onDelete(id: Number) {
     console.log('onDelete() called');
     if (confirm('Are you sure you want to delete this developer?')) {
       console.log(id);
-      this.developerService.removeDeveloper(id).subscribe(() => {
-        this.subscription = this.developerService
-          .getDevelopers()
-          .subscribe((developers) => {
-            this.developers = developers;
-            console.log('developers: ' + this.developers);
-          });
-      });
+      this.deleteSubscription = this.developerService
+        .removeDeveloper(id)
+        .subscribe(() => {
+          this.devsSubscription = this.developerService
+            .getDevelopers()
+            .subscribe((developers) => {
+              this.developers = developers;
+              console.log('developers: ' + this.developers);
+            });
+        });
     }
   }
 
   canEdit(userId: any) {
-    console.log('can edit developers: ' + userId);
     return this.authService.userMayEditSync(userId);
   }
 }

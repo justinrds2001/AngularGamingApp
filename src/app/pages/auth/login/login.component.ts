@@ -10,7 +10,7 @@ import { AuthService } from '../auth.service';
   styleUrls: ['./login.component.css'],
 })
 export class LoginComponent implements OnInit {
-  subs: Subscription | undefined;
+  sub?: Subscription;
   loginError: any;
   userInfo: any = {
     username: '',
@@ -26,15 +26,13 @@ export class LoginComponent implements OnInit {
   ngOnInit(): void {}
 
   ngOnDestroy(): void {
-    if (this.subs) {
-      this.subs.unsubscribe();
-    }
+    this.sub?.unsubscribe();
   }
 
   onSubmit(form: NgForm): void {
     this.userInfo.username = form.value.username;
     this.userInfo.password = form.value.password;
-    this.authService
+    this.sub = this.authService
       .login(this.userInfo.username, this.userInfo.password!)
       .subscribe((res) => {
         if (res) {

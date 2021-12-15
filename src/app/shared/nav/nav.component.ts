@@ -1,4 +1,5 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Subscription } from 'rxjs';
 import { AuthService } from 'src/app/pages/auth/auth.service';
 
 @Component({
@@ -6,14 +7,19 @@ import { AuthService } from 'src/app/pages/auth/auth.service';
   templateUrl: './nav.component.html',
   styles: [],
 })
-export class NavComponent implements OnInit {
+export class NavComponent implements OnInit, OnDestroy {
+  userSubscription?: Subscription;
   user: any;
   constructor(private authService: AuthService) {}
 
   ngOnInit(): void {
-    this.authService.currentUser$.subscribe((user) => {
+    this.userSubscription = this.authService.currentUser$.subscribe((user) => {
       this.user = user;
     });
+  }
+
+  ngOnDestroy(): void {
+    this.userSubscription?.unsubscribe();
   }
 
   logout() {

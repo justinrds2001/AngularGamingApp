@@ -12,7 +12,7 @@ import { User } from '../user.model';
 })
 export class RegisterComponent implements OnInit {
   user: User = new User();
-  subs: Subscription | undefined;
+  sub?: Subscription;
   registerError: any;
 
   constructor(
@@ -24,9 +24,7 @@ export class RegisterComponent implements OnInit {
   ngOnInit(): void {}
 
   ngOnDestroy(): void {
-    if (this.subs) {
-      this.subs.unsubscribe();
-    }
+    this.sub?.unsubscribe();
   }
 
   onSubmit(form: NgForm): void {
@@ -36,7 +34,7 @@ export class RegisterComponent implements OnInit {
       password: form.value.password,
       token: undefined,
     };
-    this.authService.register(user).subscribe((res) => {
+    this.sub = this.authService.register(user).subscribe((res) => {
       if (res) {
         console.log('register successful: ' + res);
         this.router.navigate(['../'], { relativeTo: this.route });

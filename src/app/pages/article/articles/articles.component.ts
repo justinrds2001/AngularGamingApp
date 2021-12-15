@@ -11,7 +11,8 @@ import { ArticleService } from '../article.service';
 })
 export class ArticlesComponent implements OnInit, OnDestroy {
   articles: Article[] = [];
-  subscription?: Subscription;
+  articlesSubscription?: Subscription;
+  deleteSubscription?: Subscription;
 
   constructor(
     private articleService: ArticleService,
@@ -20,7 +21,7 @@ export class ArticlesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     console.log('ngOnInit() called');
-    this.subscription = this.articleService
+    this.articlesSubscription = this.articleService
       .getArticles()
       .subscribe((articles) => {
         this.articles = articles;
@@ -30,27 +31,29 @@ export class ArticlesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     console.log('ngOnDestroy() called');
-    this.subscription?.unsubscribe();
+    this.articlesSubscription?.unsubscribe();
+    this.deleteSubscription?.unsubscribe();
   }
 
   onDelete(id: any) {
     console.log('onDelete() called');
     if (confirm('Are you sure you want to delete this article?')) {
       console.log(id);
-      this.articleService.removeArticle(id).subscribe(() => {
-        console.log('Article was deleted');
-        this.subscription = this.articleService
-          .getArticles()
-          .subscribe((articles) => {
-            this.articles = articles;
-            console.log('component articles: ' + this.articles);
-          });
-      });
+      this.deleteSubscription = this.articleService
+        .removeArticle(id)
+        .subscribe(() => {
+          console.log('Article was deleted');
+          this.articlesSubscription = this.articleService
+            .getArticles()
+            .subscribe((articles) => {
+              this.articles = articles;
+              console.log('component articles: ' + this.articles);
+            });
+        });
     }
   }
 
   canEdit(userId: any) {
-    console.log('can edit developers: ' + userId);
     return this.authService.userMayEditSync(userId);
   }
 }

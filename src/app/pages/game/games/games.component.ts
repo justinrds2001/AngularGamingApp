@@ -11,7 +11,8 @@ import { GameService } from '../game.service';
 })
 export class GamesComponent implements OnInit, OnDestroy {
   games: Game[] = [];
-  subscription?: Subscription;
+  gamesSubscription?: Subscription;
+  deleteSubscription?: Subscription;
 
   constructor(
     private gameService: GameService,
@@ -20,7 +21,7 @@ export class GamesComponent implements OnInit, OnDestroy {
 
   ngOnInit(): void {
     console.log('ngOnInit() called');
-    this.subscription = this.gameService.getGames().subscribe((games) => {
+    this.gamesSubscription = this.gameService.getGames().subscribe((games) => {
       this.games = games;
       console.log('component games: ' + this.games);
     });
@@ -28,25 +29,29 @@ export class GamesComponent implements OnInit, OnDestroy {
 
   ngOnDestroy(): void {
     console.log('ngOnDestroy() called');
-    this.subscription?.unsubscribe();
+    this.gamesSubscription?.unsubscribe();
+    this.deleteSubscription?.unsubscribe();
   }
 
   onDelete(id: any) {
     console.log('onDelete() called');
     if (confirm('Are you sure you want to delete this game?')) {
       console.log(id);
-      this.gameService.removeGame(id).subscribe(() => {
-        console.log('Game was deleted');
-        this.subscription = this.gameService.getGames().subscribe((games) => {
-          this.games = games;
-          console.log('games: ' + this.games);
+      this.deleteSubscription = this.gameService
+        .removeGame(id)
+        .subscribe(() => {
+          console.log('Game was deleted');
+          this.gamesSubscription = this.gameService
+            .getGames()
+            .subscribe((games) => {
+              this.games = games;
+              console.log('games: ' + this.games);
+            });
         });
-      });
     }
   }
 
   canEdit(userId: any) {
-    console.log('can edit games: ' + userId);
     return this.authService.userMayEditSync(userId);
   }
 }
